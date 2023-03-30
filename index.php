@@ -6,7 +6,15 @@
     </head>
 <body>
 
-    <div id="login">
+<?php
+session_start();
+
+if (session_status() === PHP_SESSION_ACTIVE)
+{
+    header('Location: dashboard.php');
+
+}else{
+    echo '<div id="login">
 
         <form action="login.php" method="post" name="login_form" class="login-form">
             <a class="input-text"> Numéro de sécurité sociale</a>
@@ -17,8 +25,9 @@
             <br>
             <input type="submit" name="submit" value="Connexion" class="login-button" />
         </form>
-
-    </div>
+    </div>';
+        }
+?>
 
 
 </body>

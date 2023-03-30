@@ -7,13 +7,13 @@
 <body>
 
 <?php
-session_start();
 
-if (session_status() === PHP_SESSION_ACTIVE)
+if (session_status() == PHP_SESSION_ACTIVE)
 {
     header('Location: dashboard.php');
 
 }else{
+    session_start();
     echo '<div id="login">
 
         <form action="login.php" method="post" name="login_form" class="login-form">

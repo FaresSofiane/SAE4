@@ -8,10 +8,9 @@
 
 <?php
 
-if (session_status() == PHP_SESSION_ACTIVE)
-{
-    header('Location: dashboard.php');
-
+if (!isset($_SESSION["nom_utilisateur"])) {
+    header("Location: dashboard.php");
+    exit();
 }else{
     session_start();
     echo '<div id="login">

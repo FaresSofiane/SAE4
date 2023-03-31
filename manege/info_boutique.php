@@ -1,5 +1,60 @@
 <?php
 
+session_start();
+
+if (!isset($_SESSION["nom_utilisateur"])) {
+    header("Location: ../index.php");
+    exit();
+}
+
+?>
+
+
+
+<html>
+<head>
+
+    <title>Parc d'attraction</title>
+    <link rel="stylesheet" type="text/css" href="../assets/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/manege/styles.css">
+
+
+    <link rel="stylesheet" type="text/css" href="../assets/font/Source_Sans_Pro/font.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>const navLinks = document.querySelectorAll('nav ul li a');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                navLinks.forEach(link => link.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div class="header">
+    <h1>Starlight Park</h1>
+    <nav>
+        <ul>
+            <li><a href="../index.php">Accueil</a></li>
+            <li><a href="../vente">Vente</a></li>
+            <li><a href="index.php">Manege</a></li>
+            <li class="dropdown">
+                <a href="#"><?php echo $_SESSION["nom_utilisateur"]?></a>
+                <div class="dropdown-content">
+                    <a href="../compte">Mon compte</a>
+                    <a href="../deconnection.php" class="deconnexion-btn">Déconnexion</a>
+
+                </div>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<div class="info">
+<?php
+
 $id = $_GET['id'];
 
 require '../connex.inc.php';
@@ -33,7 +88,7 @@ if ($resultat_bout ->num_rows > 0) {
     while($row = $resultat_bout->fetch_assoc()) {
 
         echo "Nom de la boutique: " . $row["Nom_boutique"] . "<br>";
-        echo "Emplacement" . $row["Emplacement"] . "<br>";
+        echo "Emplacement: " . $row["Emplacement"] . "<br>";
         echo "Chiffre d'affaire" . $row["Chiffre_affaires"] . "<br>";
         echo "Clients quotidiens" . $row["Nb_clients_quotidiens"] . "<br>";
 
@@ -53,27 +108,27 @@ if ($resultat_nomrp->num_rows > 0) {
 }
 
 if ($resultat_vente->num_rows > 0) {
-    echo "Objets vendus: <br>";
-    echo "<table border='1'>";
+    echo "<h1>Objets vendus:</h1> <br>";
+    echo "<center><table border='1'>";
     echo "<tr><th>Date</th><th>Prix</th><th>Quantité</th><th>Nom_objet</th></tr>";
 
     while($row = $resultat_vente->fetch_assoc()) {
         echo "<tr><td>" . $row["Date_vente"] . "</td><td>" . $row["Prix_unitaire"] . "</td><td>" . $row["Quantite"] . "</td><td>" . $row["nom_objet"] . "</td></tr>";
     }
-    echo "</table>";
+    echo "</table></center>";
 } else {
     echo "Aucun résultat trouvé.";
 }
 
 if ($resultat_stock ->num_rows > 0) {
-    echo "Objets en stock: <br>";
-    echo "<table border='1'>";
+    echo "<h1>Objets en stock:</h1> <br>";
+    echo "<center><table border='1'>";
     echo "<tr><th>Nom_boutique</th><th>Nom_objet</th><th>Prix</th><th>En_stock</th></tr>";
 
     while($row = $resultat_stock->fetch_assoc()) {
         echo "<tr><td>" . $row["Nom_boutique"] . "</td><td>" . $row["Nom_objet"] . "</td><td>" . $row["Prix"] . "</td><td>" . $row["En_stock"] . "</td></tr>";
     }
-    echo "</table>";
+    echo "</table></center>";
 } else {
     echo "Aucun résultat trouvé.";
 }
@@ -81,3 +136,10 @@ if ($resultat_stock ->num_rows > 0) {
 
 
 ?>
+</div>
+<p>Cliquez sur le bouton ci-dessous pour revenir à la page précédente :</p>
+<button onclick="history.go(-1)">Retour</button>
+
+</body>
+</html>
+

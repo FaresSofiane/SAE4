@@ -85,12 +85,12 @@ function chercherRole($numero_ss) {
     <nav>
         <ul>
             <li><a href="../dashboard.php">Accueil</a></li>
-            <li><a href="#">Vente</a></li>
-            <li><a href="#">Manege</a></li>
+            <li><a href="../vente">Vente</a></li>
+            <li><a href="../manege">Manege</a></li>
             <li class="dropdown">
                 <a href="#"><?php echo $_SESSION["nom_utilisateur"]?></a>
                 <div class="dropdown-content">
-                    <a href="#">Mon compte</a>
+                    <a href="index.php">Mon compte</a>
                     <a href="../deconnection.php" class="deconnexion-btn">Déconnexion</a>
 
                 </div>

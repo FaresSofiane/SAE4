@@ -144,3 +144,15 @@ nav li a {
     background-color: darkred;
 }
 
+.resultat{
+    display: flex;
+    top: 30%;
+    left: 20%;
+    width: 60%;
+    height: 60%;}
+
+.resultat a {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 150px ;
+}
+

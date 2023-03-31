@@ -1,0 +1,145 @@
+
+
+.bloc {
+    position: absolute;
+    top: 12%;
+    left: 1%;
+    right: 1%;
+    width: auto;
+    height: 80%;
+    background-color: white;
+    border-radius: 15px;
+}
+
+.container {  display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+    "Haut"
+    "Bas";
+
+
+
+}
+
+.Haut { grid-area: Haut; }
+
+.Haut h1 {
+    font-size: 42px;
+    font-family: 'Source Sans Pro', sans-serif;
+    text-align: center;
+}
+
+.Haut a{
+    font-size: 21px;
+    font-family: 'Source Sans Pro', sans-serif;
+    text-align: center;
+}
+
+.Bas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-area: Bas;
+    justify-content: center;
+    align-items: center;
+}
+
+.bouton {
+    grid-area: 1 / 1 / 2 / 3;
+    display: flex;
+    flex-direction: column;
+}
+
+.bouton-center {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+.bouton a {
+    display: inline-block;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 0.75em;
+    font-family: 'Source Sans Pro', sans-serif;
+    padding: 5px 10px;
+    color: black;
+    border-radius: 3px;
+    text-decoration: none;
+    text-align: center;
+    width: 10%;
+    max-width: 150px;
+    transition: background-color 0.2s ease-in-out;
+    justify-self: center;
+}
+
+.bouton a:hover {
+    background-color: #005A9E;
+}
+
+
+
+.input {
+    grid-area: 1 / 2 / 2 / 3;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 90%;
+    padding: 0.3em;
+}
+
+.input .password{
+    display: inline-block;
+
+
+}
+
+.input .user{
+    display: none;
+
+
+}
+.input h1{
+    font-size: 18px;
+    text-align: center;
+    margin: 0;
+    font-family: 'Source Sans Pro', sans-serif;
+
+}
+
+.input input {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: inline-block;
+    width: 100%;
+    padding: 0.3em;
+    border: 1px solid #CCC;
+    border-radius: 0.3em;
+    margin: 0.3em 0;
+}
+
+.input .bouton:hover{
+    background: #005A9E;
+    cursor: pointer;
+}
+
+.input a {
+    text-decoration: none;
+    color: #000;
+    font-size: 1em;
+    margin: 0.3em 0;
+    /*charger font */
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+

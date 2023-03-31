@@ -25,8 +25,11 @@ if (isset($_POST['submit'])) {
 
         echo 'Vous êtes connecté.';
         $row = mysqli_fetch_assoc($result);
+        $_SESSION['nom_utilisateur'] = $row["Nom"];
+        $_SESSION['nom'] = $row["Nom"];
+        $_SESSION['prenom'] = $row["Prenom"];
+        $_SESSION['numero_ss'] = $row["Numero_SS"];
 
-  $_SESSION['nom_utilisateur'] = $row["Nom"];
         header('Location: dashboard.php');
 
     } else {
@@ -35,5 +38,5 @@ if (isset($_POST['submit'])) {
         echo 'Le numéro de sécurité sociale ou le mot de passe est incorrect.';
     }
 }
-
+mysqli_close($idcom); // Fermer la connexion à la base de données
 ?>

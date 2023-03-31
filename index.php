@@ -1,9 +1,9 @@
 <html>
-    <head>
+<head>
     <title>Parc d'attraction</title>
-        <link rel="stylesheet" type="text/css" href="assets/css/styles.css">
-        <link rel="stylesheet" type="text/css" href="assets/font/Source_Sans_Pro/font.css">
-    </head>
+    <link rel="stylesheet" type="text/css" href="assets/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="assets/font/Source_Sans_Pro/font.css">
+</head>
 <body>
 
 <?php
@@ -15,7 +15,6 @@ if (session_status() == PHP_SESSION_ACTIVE)
 }else{
     session_start();
     echo '<div id="login">
-
         <form action="login.php" method="post" name="login_form" class="login-form">
             <a class="input-text"> Numéro de sécurité sociale</a>
             <input type="text" name="ssn" required/>
@@ -26,10 +25,9 @@ if (session_status() == PHP_SESSION_ACTIVE)
             <input type="submit" name="submit" value="Connexion" class="login-button" />
         </form>
     </div>';
-        }
+}
 ?>
 
 
 </body>
 </html>
-

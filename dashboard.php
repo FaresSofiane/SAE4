@@ -34,13 +34,13 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     <h1>Starlight Park</h1>
     <nav>
         <ul>
-            <li><a href="#">Accueil</a></li>
+            <li><a href="index.php">Accueil</a></li>
             <li><a href="#">Vente</a></li>
-            <li><a href="#">Manege</a></li>
+            <li><a href="manege">Manege</a></li>
             <li class="dropdown">
                 <a href="#"><?php echo $_SESSION["nom_utilisateur"]?></a>
                 <div class="dropdown-content">
-                    <a href="#">Mon compte</a>
+                    <a href="compte">Mon compte</a>
                     <a href="deconnection.php" class="deconnexion-btn">Déconnexion</a>
 
                 </div>

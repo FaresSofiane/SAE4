@@ -16,8 +16,7 @@ if (!isset($_SESSION["nom_utilisateur"])) {
 
     <title>Parc d'attraction</title>
     <link rel="stylesheet" type="text/css" href="../assets/css/styles.css">
-    <link rel="stylesheet" type="text/css" href="../assets/css/manege/styles.css">
-
+    <link rel="stylesheet" type="text/css" href="../assets/css/manege/style.css">
     <link rel="stylesheet" type="text/css" href="../assets/font/Source_Sans_Pro/font.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>const navLinks = document.querySelectorAll('nav ul li a');
@@ -71,7 +70,6 @@ if (!isset($_SESSION["nom_utilisateur"])) {
 
 <br>
 <div class="resultat">
-    <a class="resultat"> yesy</a>
     <?php
 
 
@@ -87,32 +85,34 @@ if (!isset($_SESSION["nom_utilisateur"])) {
             $requete = "SELECT * FROM Manege WHERE Nom_manege LIKE '%$recherche%' or Description LIKE '%$recherche%'";
             $resultat = mysqli_query($idcom, $requete);
             echo '<table>';
-            echo '<tr>';
+            echo '<thead><tr>';
             echo '<th>Nom du manège</th>';
             echo '<th>Description</th>';
             echo '<th>nombre min de client</th>';
-            echo '</tr>';
+            echo '</tr><thead><tbody>';
             while ($ligne = mysqli_fetch_assoc($resultat)) {
                 echo '<tr>';
-                echo '<td>' . $ligne['Nom_manege'] . '</td>';
+                echo '<td><a href="info_manege.php?id=' . $ligne['Id_manege'] . '">' . $ligne['Nom_manege'] . '</a></td>';
+
                 echo '<td>' . $ligne['Description'] . '</td>';
                 echo '<td>' . $ligne['Taille_min_client'] . '</td>';
                 echo '</tr>';
             }
-            echo '</table>';
+            echo '<tbody></table>';
         } else {
             $requete = "SELECT * FROM Boutique WHERE Nom_boutique LIKE '%$recherche%' or Emplacement LIKE '%$recherche%'";
             $resultat = mysqli_query($idcom, $requete);
             echo '<table>';
             echo '<tr>';
-            echo '<th>Nom du manège</th>';
+            echo '<th>Nom de la boutique</th>';
             echo '<th>Description</th>';
             echo "<th>Chiffre d'affaire</th>";
             echo '<th>Nombre quotidien de clients</th>';
             echo '</tr>';
             while ($ligne = mysqli_fetch_assoc($resultat)) {
                 echo '<tr>';
-                echo '<td>' . $ligne['Nom_boutique'] . '</td>';
+                echo '<td><a href="info_boutique.php?id=' . $ligne['Id_boutique'] . '">' . $ligne['Nom_boutique'] . '</a></td>';
+
                 echo '<td>' . $ligne['Emplacement'] . '</td>';
                 echo '<td>' . $ligne['Chiffre_affaires'] . '</td>';
                 echo '<td>' . $ligne['Nb_clients_quotidiens'] . '</td>';

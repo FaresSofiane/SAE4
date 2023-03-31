@@ -10,8 +10,7 @@ function connex($base,$param)
     }
     else {
         mysqli_set_charset($idcom, "utf8mb4");
-        echo "<script type='text/javascript'>";
-        echo "alert('Connexion réussie à la base $base')</script>";
+
     }
     return $idcom;
 }

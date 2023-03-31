@@ -17,8 +17,6 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     <title>Parc d'attraction</title>
     <link rel="stylesheet" type="text/css" href="../assets/css/styles.css">
     <link rel="stylesheet" type="text/css" href="../assets/css/manege/styles.css">
-
-
     <link rel="stylesheet" type="text/css" href="../assets/font/Source_Sans_Pro/font.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>const navLinks = document.querySelectorAll('nav ul li a');
@@ -37,9 +35,11 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     <h1>Starlight Park</h1>
     <nav>
         <ul>
+            <?php if ($_SESSION["role"]=="Directeur"){echo '<li><a href="#">Admin</a></li>';}?>
+
             <li><a href="../index.php">Accueil</a></li>
-            <li><a href="../vente">Vente</a></li>
-            <li><a href="index.php">Manege</a></li>
+            <li><a href="#">Vente</a></li>
+            <li><a href="../manege">Manege</a></li>
             <li class="dropdown">
                 <a href="#"><?php echo $_SESSION["nom_utilisateur"]?></a>
                 <div class="dropdown-content">

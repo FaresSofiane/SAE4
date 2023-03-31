@@ -7,53 +7,11 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     exit();
 }
 
-function chercherRole($numero_ss) {
 
-    Include("../connex.inc.php") ;
-    $conn=connex("sae4", "../param.wamp") ;
 
-    // Check if the personnel is a Directeur
-    $sql = "SELECT * FROM Directeur WHERE Numero_SS = '$numero_ss'";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        return "Directeur";
-    }
-
-    // Check if the personnel is a CM
-    $sql = "SELECT * FROM CM WHERE Numero_SS = '$numero_ss'";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        return "CM";
-    }
-
-    // Check if the personnel is a Technicien
-    $sql = "SELECT * FROM Technicien WHERE Numero_SS = '$numero_ss'";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        return "Technicien";
-    }
-
-    // Check if the personnel is a Responsable
-    $sql = "SELECT * FROM Responsable WHERE Numero_SS = '$numero_ss'";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        return "Responsable";
-    }
-
-    // Check if the personnel is an Employe
-    $sql = "SELECT * FROM Employe WHERE Numero_SS = '$numero_ss'";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        return "Employe";
-    }
-
-    // If the personnel is not found in any of the tables, return "Unknown"
-    return "Unknown";
-}
 
 
 ?>
-
 
 
 
@@ -63,8 +21,7 @@ function chercherRole($numero_ss) {
     <title>Parc d'attraction</title>
     <link rel="stylesheet" type="text/css" href="../assets/css/styles.css">
     <link rel="stylesheet" type="text/css" href="../assets/css/compte/styles.css">
-
-    <link rel="stylesheet" type="text/css" href="../assets/font/Source_Sans_Pro/font.css">
+    <link rel="stylesheet" type="text/css" href="assets/font/Source_Sans_Pro/font.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>const navLinks = document.querySelectorAll('nav ul li a');
 
@@ -74,8 +31,6 @@ function chercherRole($numero_ss) {
                 this.classList.add('active');
             });
         });
-
-
     </script>
     <meta charset="UTF-8">
 </head>
@@ -84,8 +39,10 @@ function chercherRole($numero_ss) {
     <h1>Starlight Park</h1>
     <nav>
         <ul>
-            <li><a href="../dashboard.php">Accueil</a></li>
-            <li><a href="../vente">Vente</a></li>
+            <?php if ($_SESSION["role"]=="Directeur"){echo '<li><a href="../admin">Admin</a></li>';}?>
+
+            <li><a href="../index.php">Accueil</a></li>
+            <li><a href="#">Vente</a></li>
             <li><a href="../manege">Manege</a></li>
             <li class="dropdown">
                 <a href="#"><?php echo $_SESSION["nom_utilisateur"]?></a>

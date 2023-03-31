@@ -8,10 +8,12 @@
 
 <?php
 
-if (!isset($_SESSION["nom_utilisateur"])) {
+if (isset($_SESSION["nom_utilisateur"])) {
     header("Location: dashboard.php");
     exit();
 }else{
+
+
     session_start();
     echo '<div id="login">
         <form action="login.php" method="post" name="login_form" class="login-form">

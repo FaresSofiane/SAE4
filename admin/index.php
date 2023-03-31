@@ -7,6 +7,14 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     exit();
 }
 
+if ($_SESSION["role"] != "Directeur") {
+    header("Location: ../index.php");
+    exit();
+}
+
+
+
+
 ?>
 
 
@@ -15,8 +23,10 @@ if (!isset($_SESSION["nom_utilisateur"])) {
 <head>
 
     <title>Parc d'attraction</title>
-    <link rel="stylesheet" type="text/css" href="assets/css/styles.css">
-    <link rel="stylesheet" type="text/css" href="assets/font/Source_Sans_Pro/font.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/admin/styles.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/admin/table.css">
+    <link rel="stylesheet" type="text/css" href="../assets/font/Source_Sans_Pro/font.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>const navLinks = document.querySelectorAll('nav ul li a');
 
@@ -51,11 +61,12 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     </nav>
 </div>
 
-<?php
+<div class="Bouton-redirect">
 
-echo $_SESSION["role"];
+    <button onclick="window.location.href='manege'">manège</button>
+    <button onclick="window.location.href='personnel'">Personnel</button>
+    <button  onclick="window.location.href='boutique'">Boutique</button>
 
-?>
+</div>
 </body>
-
 </html>

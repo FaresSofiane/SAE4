@@ -1,0 +1,125 @@
+.recherche {
+    position: absolute;
+    top: 30%;
+    left: 20%;
+    width: 60%;
+    height: 60%;
+}
+
+h1{
+    font-size: 18px;
+    text-align: center;
+    font-family: 'Source Sans Pro', sans-serif;
+
+}
+
+.recherche .input-text {
+    display: block;
+    position: absolute;
+    margin: 10px 0;
+    height: 5%;
+    width: 50%;
+    left: 40%;
+}
+
+.title {
+    display: flex;
+    position: absolute;
+    color: white;
+    font-size: 40px;
+    text-align: center;
+
+    font-family: 'Source Sans Pro', sans-serif;
+    top: 10%;
+    left: 20%;
+}
+.recherche button {
+    width: 15%;
+    height: 5%;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 0.5em;
+    font-size: 1em;
+    font-family: 'Source Sans Pro', sans-serif;
+    position: absolute;
+    left: 40%;
+    top: 20%;
+}
+
+.resultat{
+    display: flex;
+    position: absolute;
+    top: 30%;
+    left: 10%;
+
+}
+
+.resultat table {
+    position: absolute;
+    top: 100%;
+}
+
+table {
+    width: 800px;
+    border-collapse: collapse;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+th,
+td {
+    padding: 15px;
+    background-color: rgba(255,255,255,0.2);
+    color: #fff;
+}
+
+th {
+    text-align: left;
+}
+
+thead {
+th {
+    background-color: greenyellow;
+}
+}
+
+tbody {
+
+tr {
+
+&
+:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+}
+td {
+    position: relative;
+
+&
+:hover {
+
+&
+:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -9999px;
+    bottom: -9999px;
+    background-color: rgba(255, 255, 255, 0.2);
+    z-index: -1;
+}
+
+}
+}
+}
+
+
+.info {
+    position: absolute;
+    top: 30%;
+    left: 30%;
+
+
+}

@@ -73,6 +73,14 @@ if (isset($_POST['submit'])) {
         $_SESSION['prenom'] = $row["Prenom"];
         $_SESSION['numero_ss'] = $row["Numero_SS"];
         $_SESSION['role'] = chercherRole($row["Numero_SS"]);
+        if ($_SESSION['role'] == "CM") {
+            $sql = "SELECT id_cm FROM CM WHERE Numero_SS = '".$row["Numero_SS"]."'";
+        $result = mysqli_query($idcom, $sql);
+        $row = mysqli_fetch_assoc($result);
+        $_SESSION['id_cm'] = $row["id_cm"];
+        }
+
+
 
 
         header('Location: dashboard.php');

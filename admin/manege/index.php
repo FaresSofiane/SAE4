@@ -6,8 +6,7 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     header("Location: ../../index.php");
     exit();
 }
-
-if ($_SESSION["role"] != "Directeur") {
+if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "CM") {
     header("Location: ../index.php");
     exit();
 }
@@ -44,9 +43,7 @@ $conn=connex("sae4", "../../param.wamp") ;
     <h1>Starlight Park</h1>
     <nav>
         <ul>
-            <?php if ($_SESSION["role"]=="Directeur"){echo '<li><a href="../">Admin</a></li>';}?>
-
-            <li><a href="../../index.php">Accueil</a></li>
+<?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="CM"){echo '<li><a href="admin">Admin</a></li>';}?>            <li><a href="../../index.php">Accueil</a></li>
             <li><a href="#">Vente</a></li>
             <li><a href="../../manege">Manege</a></li>
             <li class="dropdown">
@@ -66,11 +63,21 @@ $conn=connex("sae4", "../../param.wamp") ;
 <div class="resultat">
 
 <?php
-$sql = "SELECT * FROM Manege";
-$result = $conn->query($sql);
+if ($_SESSION["role"] == "Directeur") {
+    $sql = "SELECT * FROM Manege";
+    $result = $conn->query($sql);
+    echo "<table><thead><tr><th>Id manège</th><th>Nom manège</th><th>Description</th><th>Taille min. client</th><th>Id CM</th><th>Id zone</th><th>Modifier</th><th>Supprimer</th></tr><thead><tbody>";
+    while($row = $result->fetch_assoc()) {
+        echo "<tr><td>" . $row["Id_manege"]. "</td><td>" . $row["Nom_manege"]. "</td><td>" . $row["Description"]. "</td><td>" . $row["Taille_min_client"]. "</td><td>" . $row["Id_cm"]. "</td><td>" . $row["Id_zone"]. "</td>";
+        echo "<td><a href='modifier.php?id_manege=".$row["Id_manege"]."'>Modifier</a></td>";
+        echo "<td><a href='supprimer.php?id_manege=".$row["Id_manege"]."'>Supprimer</a></td>";
 
-// Affichage des manèges dans un tableau
-echo "<table><thead><tr><th>Id manège</th><th>Nom manège</th><th>Description</th><th>Taille min. client</th><th>Id CM</th><th>Id zone</th><th>Modifier</th><th>Supprimer</th></tr><thead><tbody>";
+    }
+    echo "</tbody></table>";
+} else {
+    $sql = "SELECT * FROM Manege WHERE Id_cm = '" . $_SESSION["id_cm"]. "'";
+        $result = $conn->query($sql);
+    echo "<table><thead><tr><th>Id manège</th><th>Nom manège</th><th>Description</th><th>Taille min. client</th><th>Id CM</th><th>Id zone</th><th>Modifier</th><th>Supprimer</th></tr><thead><tbody>";
 while($row = $result->fetch_assoc()) {
     echo "<tr><td>" . $row["Id_manege"]. "</td><td>" . $row["Nom_manege"]. "</td><td>" . $row["Description"]. "</td><td>" . $row["Taille_min_client"]. "</td><td>" . $row["Id_cm"]. "</td><td>" . $row["Id_zone"]. "</td>";
     echo "<td><a href='modifier.php?id_manege=".$row["Id_manege"]."'>Modifier</a></td>";
@@ -78,6 +85,11 @@ while($row = $result->fetch_assoc()) {
 
 }
 echo "</tbody></table>";
+}
+
+
+// Affichage des manèges dans un tableau
+
 
 // Fermeture de la connexion à la base de données
 $conn->close();

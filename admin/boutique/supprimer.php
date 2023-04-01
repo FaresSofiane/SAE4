@@ -16,7 +16,7 @@ $conn=connex("sae4", "../../param.wamp") ;
 
 
 // Récupération de l'ID du manège à supprimer
-$id_manege = $_GET['id_boutique'];
+$id_boutique = $_GET['id_boutique'];
 
 // Requête SQL pour supprimer le manège correspondant à l'ID
 $sql = "DELETE FROM Boutique WHERE Id_boutique = '$id_boutique'";

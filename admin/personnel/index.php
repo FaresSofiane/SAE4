@@ -44,9 +44,7 @@ Include("role.php") ;
     <h1>Starlight Park</h1>
     <nav>
         <ul>
-            <?php if ($_SESSION["role"]=="Directeur"){echo '<li><a href="../">Admin</a></li>';}?>
-
-            <li><a href="../../index.php">Accueil</a></li>
+<?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="CM"){echo '<li><a href="admin">Admin</a></li>';}?>            <li><a href="../../index.php">Accueil</a></li>
             <li><a href="#">Vente</a></li>
             <li><a href="../../manege">Manege</a></li>
             <li class="dropdown">

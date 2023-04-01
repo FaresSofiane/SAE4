@@ -20,6 +20,7 @@ if (!isset($_SESSION["nom_utilisateur"])) {
 
 
     <link rel="stylesheet" type="text/css" href="../assets/font/Source_Sans_Pro/font.css">
+            <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>const navLinks = document.querySelectorAll('nav ul li a');
 
@@ -58,8 +59,8 @@ if (!isset($_SESSION["nom_utilisateur"])) {
 $id = $_GET['id'];
 
 require '../connex.inc.php';
-require_once '../param.wamp.inc.php';
-$conn = connex(MYBASE, "../param.wamp");
+require_once '../myparam.inc.php';
+$conn = connex(MYBASE, "../myparam");
 
 $stock = "SELECT b.Nom_boutique, o.Nom_objet, o.Prix, o.En_stock
 FROM Boutique b

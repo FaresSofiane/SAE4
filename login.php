@@ -1,70 +1,64 @@
 <?php
 
-Include("connex.inc.php") ;
-$idcom=connex("sae4", "param.wamp") ;
+Include("connex.inc.php");
+Include("myparam.inc.php");
+
+$idcom = connex(MYBASE, "myparam");
+session_start();
 
 function chercherRole($numero_ss) {
 
+    Include("myparam.inc.php") ;;
+    $conn=connex(MYBASE, "myparam") ;
 
-    $conn=connex("sae4", "param.wamp") ;
-
-    // Check if the personnel is a Directeur
     $sql = "SELECT * FROM Directeur WHERE Numero_SS = '$numero_ss'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         return "Directeur";
     }
 
-    // Check if the personnel is a CM
     $sql = "SELECT * FROM CM WHERE Numero_SS = '$numero_ss'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         return "CM";
     }
 
-    // Check if the personnel is a Technicien
     $sql = "SELECT * FROM Technicien WHERE Numero_SS = '$numero_ss'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         return "Technicien";
     }
 
-    // Check if the personnel is a Responsable
     $sql = "SELECT * FROM Responsable WHERE Numero_SS = '$numero_ss'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         return "Responsable";
     }
 
-    // Check if the personnel is an Employe
     $sql = "SELECT * FROM Employe WHERE Numero_SS = '$numero_ss'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         return "Employe";
     }
 
-    // If the personnel is not found in any of the tables, return "Unknown"
-    return "Unknown";
 }
 
-session_start();
 
 if (isset($_POST['submit'])) {
 
     $ssn = $_POST['ssn'];
     $password = $_POST['password'];
+    $hashed_password = hash('sha256', $password);
 
-
-    $sql = "SELECT * FROM Personnel WHERE Numero_SS = '$ssn' AND Mot_de_passe = '$password'";
-
-    $result = mysqli_query($idcom, $sql);
+    $stmt = mysqli_prepare($idcom, "SELECT * FROM Personnel WHERE Numero_SS = ? AND Mot_de_passe = ?");
+    mysqli_stmt_bind_param($stmt, "ss", $ssn, $hashed_password);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
 
     if (mysqli_num_rows($result) > 0) {
 
         $_SESSION['id'] = session_id();
         $_SESSION['ssn'] = $ssn;
-        // Génère une clé de session unique
-
 
         echo 'Vous êtes connecté.';
         $row = mysqli_fetch_assoc($result);
@@ -73,29 +67,31 @@ if (isset($_POST['submit'])) {
         $_SESSION['prenom'] = $row["Prenom"];
         $_SESSION['numero_ss'] = $row["Numero_SS"];
         $_SESSION['role'] = chercherRole($row["Numero_SS"]);
+
         if ($_SESSION['role'] == "CM") {
-            $sql = "SELECT id_cm FROM CM WHERE Numero_SS = '".$row["Numero_SS"]."'";
-        $result = mysqli_query($idcom, $sql);
-        $row = mysqli_fetch_assoc($result);
-        $_SESSION['id_cm'] = $row["id_cm"];
+            $stmt = mysqli_prepare($idcom, "SELECT id_cm FROM CM WHERE Numero_SS = ?");
+            mysqli_stmt_bind_param($stmt, "s", $row["Numero_SS"]);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            $row = mysqli_fetch_assoc($result);
+            $_SESSION['id_cm'] = $row["id_cm"];
         }
 
         if ($_SESSION['role'] == "Responsable") {
-            $sql = "SELECT * FROM Responsable WHERE Numero_SS = '".$row["Numero_SS"]."'";
-            $result = mysqli_query($idcom, $sql);
+            $stmt = mysqli_prepare($idcom, "SELECT * FROM Responsable WHERE Numero_SS = ?");
+            mysqli_stmt_bind_param($stmt, "s", $row["Numero_SS"]);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
             $row = mysqli_fetch_assoc($result);
             $_SESSION['id_boutique'] = $row["id_boutique"];
             $_SESSION['id_responsable'] = $row["Id_responsable"];
             echo $_SESSION['id_boutique'];
             echo $_SESSION['id_responsable'];
-
         }
         header('Location: dashboard.php');
     } else {
-
-
         echo 'Le numéro de sécurité sociale ou le mot de passe est incorrect.';
     }
 }
-mysqli_close($idcom); // Fermer la connexion à la base de données
+mysqli_close($idcom);
 ?>

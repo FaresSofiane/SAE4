@@ -11,7 +11,8 @@ if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "Responsable") {
     exit();
 }
 Include("../../connex.inc.php") ;
-$conn=connex("sae4", "../../param.wamp") ;
+Include("../../myparam.inc.php");
+$conn=connex(MYBASE, "../../myparam") ;
 
 
 
@@ -26,6 +27,7 @@ $conn=connex("sae4", "../../param.wamp") ;
         <link rel="stylesheet" type="text/css" href="../../assets/css/styles.css">
         <link rel="stylesheet" type="text/css" href="../../assets/css/admin/styles.css">
         <link rel="stylesheet" type="text/css" href="../../assets/font/Source_Sans_Pro/font.css">
+            <meta charset="UTF-8">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script>const navLinks = document.querySelectorAll('nav ul li a');
 
@@ -62,17 +64,13 @@ $conn=connex("sae4", "../../param.wamp") ;
 <div class="ajouter">
 <?php
 
-// Vérifier si le formulaire a été soumis
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Récupérer les données du formulaire
     $nom_boutique = $_POST['nom_boutique'];
     $emplacement = $_POST['emplacement'];
     $chiffreaffaire = $_POST['chiffreaffaire'];
     $clientquotidien = $_POST['clientquotidien'];
-    // Préparer la requête SQL pour insérer un nouveau manège
     $sql = "INSERT INTO boutique (Nom_boutique, Emplacement, Chiffre_affaires, Nb_clients_quotidiens) VALUES ('$nom_boutique', '$emplacement', '$chiffreaffaire', '$clientquotidien')";
 
-    // Exécuter la requête SQL
     if (mysqli_query($conn, $sql)) {
         $_SESSION["Message"] = "Le manège a été ajouté avec succès.";
     } else {
@@ -81,11 +79,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: index.php");
 }
 
-// Récupérer les zones disponibles
 $sql_zones = "SELECT * FROM Zone";
 $result_zones = mysqli_query($conn, $sql_zones);
 
-// Récupérer les CM disponibles
 $sql_cm = "SELECT * FROM CM";
 $result_cm = mysqli_query($conn, $sql_cm);
 
@@ -95,7 +91,6 @@ $result_cm = mysqli_query($conn, $sql_cm);
         Nom de la boutique: <input type="text" name="nom_boutique"><br><br>
         Emplacement: <select name="emplacement">
             <?php
-            // Afficher les options pour les CM disponibles
             while ($row = mysqli_fetch_assoc($result_zones)) {
                 echo '<option value="' . $row["Id_zone"] . '">' . $row["Nom_zone"] . '</option>';
 
@@ -112,6 +107,5 @@ $result_cm = mysqli_query($conn, $sql_cm);
 
     </div>
 <?php
-// Fermer la connexion à la base de données
 mysqli_close($conn);
 ?>

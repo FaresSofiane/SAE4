@@ -18,6 +18,7 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     <link rel="stylesheet" type="text/css" href="../assets/css/styles.css">
     <link rel="stylesheet" type="text/css" href="../assets/css/manege/styles.css">
     <link rel="stylesheet" type="text/css" href="../assets/font/Source_Sans_Pro/font.css">
+            <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>const navLinks = document.querySelectorAll('nav ul li a');
 
@@ -35,7 +36,7 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     <h1>Starlight Park</h1>
     <nav>
         <ul>
-           <?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="CM"){echo '<li><a href="admin">Admin</a></li>';}?>
+           <?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="CM"){echo '<li><a href="../admin">Admin</a></li>';}?>
             <li><a href="../index.php">Accueil</a></li>
             <li><a href="#">Vente</a></li>
             <li><a href="../manege">Manege</a></li>
@@ -76,12 +77,12 @@ if (!isset($_SESSION["nom_utilisateur"])) {
 
 
     require '../connex.inc.php';
-    require_once '../param.wamp.inc.php';
+    require_once '../myparam.inc.php';
     if (isset($_GET['parc']) || isset($_GET['recherche'])){
 
         $category = $_GET['parc'];
         $recherche = $_GET['recherche'];
-        $idcom = connex(MYBASE, "../param.wamp");
+        $idcom = connex(MYBASE, "../myparam");
         if ($category=="Manege") {
             $requete = "SELECT * FROM Manege WHERE Nom_manege LIKE '%$recherche%' or Description LIKE '%$recherche%'";
             $resultat = mysqli_query($idcom, $requete);

@@ -7,13 +7,15 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     exit();
 }
 
-if ($_SESSION["role"] != "Directeur") {
+if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "CM" && $_SESSION["role"] != "Responsable") {
     header("Location: ../index.php");
     exit();
 }
 Include("../../connex.inc.php") ;
-$conn=connex("sae4", "../../param.wamp") ;
+Include("../../myparam.inc.php");
+$conn=connex(MYBASE, "../../myparam") ;
 
+Include("role.php") ;
 
 ?>
 
@@ -26,6 +28,7 @@ $conn=connex("sae4", "../../param.wamp") ;
     <link rel="stylesheet" type="text/css" href="../../assets/css/styles.css">
     <link rel="stylesheet" type="text/css" href="../../assets/css/admin/styles.css">
     <link rel="stylesheet" type="text/css" href="../../assets/font/Source_Sans_Pro/font.css">
+    <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>const navLinks = document.querySelectorAll('nav ul li a');
 
@@ -43,7 +46,7 @@ $conn=connex("sae4", "../../param.wamp") ;
     <h1>Starlight Park</h1>
     <nav>
         <ul>
-<?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="CM"){echo '<li><a href="admin">Admin</a></li>';}?>            <li><a href="../../index.php">Accueil</a></li>
+            <?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="CM"){echo '<li><a href="../index.php">Admin</a></li>';}?>            <li><a href="../../index.php">Accueil</a></li>
             <li><a href="#">Vente</a></li>
             <li><a href="../../manege">Manege</a></li>
             <li class="dropdown">
@@ -65,7 +68,6 @@ $conn=connex("sae4", "../../param.wamp") ;
 Include("role.php") ;
 
 
-// Traitement du formulaire de modification
 if (isset($_POST['modifier'])) {
     echo "Modification du personnel";
 
@@ -78,11 +80,9 @@ if (isset($_POST['modifier'])) {
     echo $prenom;
     echo $role;
 
-    // Modification des données du personnel
     $requete = "UPDATE Personnel SET Numero_SS='$id', Nom='$nom', Prenom='$prenom' WHERE Numero_SS='$id'";
     mysqli_query($conn, $requete);
 
-    // Modification du rôle
     if ($role != chercherRole($id)){
         echo chercherRole($id) ;
     switch (chercherRole($id)) {
@@ -122,7 +122,6 @@ if (isset($_POST['modifier'])) {
     }
     mysqli_query($conn, $requete);
 }
-    // Redirection vers la page de liste du personnel
     $_SESSION["Message"] = "Le personnel a été modifié avec succès.";
     header("Location: index.php");
     exit();

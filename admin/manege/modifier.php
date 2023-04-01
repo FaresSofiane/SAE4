@@ -11,7 +11,8 @@ if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "CM") {
     exit();
 }
 Include("../../connex.inc.php") ;
-$conn=connex("sae4", "../../param.wamp") ;
+Include("../../myparam.inc.php");
+$conn=connex(MYBASE, "../../myparam") ;
 
 
 
@@ -27,6 +28,7 @@ $conn=connex("sae4", "../../param.wamp") ;
         <link rel="stylesheet" type="text/css" href="../../assets/css/admin/styles.css">
         <link rel="stylesheet" type="text/css" href="../../assets/css/admin/table.css">
         <link rel="stylesheet" type="text/css" href="../../assets/font/Source_Sans_Pro/font.css">
+            <meta charset="UTF-8">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script>const navLinks = document.querySelectorAll('nav ul li a');
 
@@ -62,9 +64,7 @@ $conn=connex("sae4", "../../param.wamp") ;
 
 
 <?php
-// Vérifier si le formulaire a été soumis
 if (isset($_POST['id_manege'])) {
-    // Récupérer les valeurs du formulaire
     $id_manege = $_POST['id_manege'];
     $nom_manege = $_POST['nom_manege'];
     $description = $_POST['description'];
@@ -72,28 +72,22 @@ if (isset($_POST['id_manege'])) {
     $id_cm = $_POST['id_cm'];
     $id_zone = $_POST['id_zone'];
 
-    // Requête de mise à jour du manège
     $sql = "UPDATE Manege SET Nom_manege='$nom_manege', Description='$description', Taille_min_client='$taille_min_client', Id_cm='$id_cm', Id_zone='$id_zone' WHERE Id_manege='$id_manege'";
 
-    // Exécuter la requête de mise à jour du manège
     if (mysqli_query($conn, $sql)) {
         $_SESSION["Message"] = "Le manège a été modifié avec succès";
     } else {
         $_SESSION["Message"] = "Erreur lors de la modification du manège: " . mysqli_error($conn);
     }
 
-    // Rediriger vers la page d'accueil
     header("Location: index.php");
     mysqli_close($conn);
 } else {
-    // Récupérer l'ID du manège
     $id_manege = $_GET['id_manege'];
 
-    // Requête pour récupérer les informations du manège
     $sql = "SELECT * FROM Manege WHERE Id_manege='$id_manege'";
     $result = mysqli_query($conn, $sql);
 
-    // Récupérer les informations du manège
     $row = mysqli_fetch_assoc($result);
     $nom_manege = $row['Nom_manege'];
     $description = $row['Description'];
@@ -101,9 +95,7 @@ if (isset($_POST['id_manege'])) {
     $id_cm = $row['Id_cm'];
     $id_zone = $row['Id_zone'];
 
-    // Requête pour récupérer les zones disponibles
 if ($_SESSION["role"] == "Directeur") {
-// Récupérer les CM disponibles
     $sql_cm = "SELECT * FROM CM";
     $result_cm = mysqli_query($conn, $sql_cm);
 
@@ -132,7 +124,6 @@ $result_zones = mysqli_query($conn, $sql_zones);
         <label for="id_cm">ID du CM:</label>
         <select name="id_cm">
             <?php
-            // Afficher les options pour les CM disponibles
             while ($row = mysqli_fetch_assoc($result_cm)) {
                 echo '<option value="' . $row["Id_cm"] . '">' . $row["Numero_SS"] . ' - ' . $row["Famille"] . '</option>';
             }
@@ -142,7 +133,6 @@ $result_zones = mysqli_query($conn, $sql_zones);
         <label for="id_zone">ID de la zone:</label>
         <select name="id_zone">
             <?php
-            // Afficher les options pour les zones disponibles
             while ($row = mysqli_fetch_assoc($result_zones)) {
                 echo '<option value="' . $row["Id_zone"] . '">' . $row["Nom_zone"] . '</option>';
             }

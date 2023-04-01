@@ -12,13 +12,13 @@ if ($_SESSION["role"] != "Directeur") {
     exit();
 }
 Include("../../connex.inc.php") ;
-$conn=connex("sae4", "../../param.wamp") ;
+Include("../../myparam.inc.php");
+$conn=connex(MYBASE, "../../myparam") ;
 
 
-// Récupération de l'ID du manège à supprimer
+
 $id_manege = $_GET['id_manege'];
 
-// Requête SQL pour supprimer le manège correspondant à l'ID
 $sql = "DELETE FROM Maintenance WHERE Id_manege = $id_manege";
 
 if (mysqli_query($conn, $sql)) {
@@ -27,8 +27,6 @@ if (mysqli_query($conn, $sql)) {
     $_SESSION["Message"] = "Erreur lors de la suppression du manège: " . mysqli_error($conn);
 }
 
-// Redirection vers la page de gestion des manèges
 header("Location: index.php");
-// Fermeture de la connexion à la base de données
 mysqli_close($conn);
 ?>

@@ -12,19 +12,24 @@ if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "CM" && $_SESSION["
     exit();
 }
 
+
 Include("../connex.inc.php") ;
-$conn=connex("sae4", "../param.wamp") ;
+Include("../myparam.inc.php");
+$conn=connex(MYBASE, "../myparam") ;
 
 ?>
+
+
 
 <html>
 <head>
 
     <title>Parc d'attraction</title>
     <link rel="stylesheet" type="text/css" href="../assets/css/styles.css">
-    <link rel="stylesheet" type="text/css" href="../assets/css/admin/quiarepare.css">
-
+    <link rel="stylesheet" type="text/css" href="../assets/css/admin/styles.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/admin/table.css">
     <link rel="stylesheet" type="text/css" href="../assets/font/Source_Sans_Pro/font.css">
+    <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>const navLinks = document.querySelectorAll('nav ul li a');
 
@@ -42,8 +47,7 @@ $conn=connex("sae4", "../param.wamp") ;
     <h1>Starlight Park</h1>
     <nav>
         <ul>
-            <?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="CM" || $_SESSION['role'] == "Responsable"){echo '<li><a href="admin">Admin</a></li>';}?>
-
+            <?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="CM" || $_SESSION['role'] == "Responsable"){echo '<li><a href="../admin">Admin</a></li>';}?>
             <li><a href="../dashboard.php">Accueil</a></li>
             <li><a href="#">Vente</a></li>
             <li><a href="../manege">Manege</a></li>
@@ -67,7 +71,6 @@ $conn=connex("sae4", "../param.wamp") ;
 ?>
     <select name="id_manege">
     <?php
-    // Afficher les options pour les CM disponibles
     while ($row = mysqli_fetch_assoc($result)) {
         echo '<option value="' . $row["Id_manege"] . '">' . $row["Nom_manege"].'</option>';
     }

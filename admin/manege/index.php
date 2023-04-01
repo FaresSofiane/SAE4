@@ -11,7 +11,8 @@ if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "CM") {
     exit();
 }
 Include("../../connex.inc.php") ;
-$conn=connex("sae4", "../../param.wamp") ;
+Include("../../myparam.inc.php");
+$conn=connex(MYBASE, "../../myparam") ;
 
 
 
@@ -26,6 +27,7 @@ $conn=connex("sae4", "../../param.wamp") ;
     <link rel="stylesheet" type="text/css" href="../../assets/css/styles.css">
     <link rel="stylesheet" type="text/css" href="../../assets/css/admin/styles.css">
     <link rel="stylesheet" type="text/css" href="../../assets/font/Source_Sans_Pro/font.css">
+            <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>const navLinks = document.querySelectorAll('nav ul li a');
 
@@ -115,10 +117,6 @@ echo "</tbody></table>";
 }
 
 
-// Affichage des manèges dans un tableau
-
-
-// Fermeture de la connexion à la base de données
 $conn->close();
 echo "</div>";
 if (isset($_SESSION["Message"])){

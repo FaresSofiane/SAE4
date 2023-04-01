@@ -8,7 +8,9 @@ if (!isset($_SESSION["nom_utilisateur"])) {
 }
 
 
-
+Include("../connex.inc.php") ;
+Include("../myparam.inc.php");
+$conn=connex(MYBASE, "../myparam") ;
 
 
 ?>
@@ -22,6 +24,7 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     <link rel="stylesheet" type="text/css" href="../assets/css/styles.css">
     <link rel="stylesheet" type="text/css" href="../assets/css/compte/styles.css">
     <link rel="stylesheet" type="text/css" href="assets/font/Source_Sans_Pro/font.css">
+            <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>const navLinks = document.querySelectorAll('nav ul li a');
 
@@ -76,10 +79,8 @@ if (!isset($_SESSION["nom_utilisateur"])) {
                 <a id="user_btn">Mes informations personnelles</a>
                     <?php
                     if (isset($_SESSION["error_message"]) && !empty($_SESSION["error_message"])) {
-                        // Afficher le message d'erreur
                         echo $_SESSION["error_message"];
 
-                        // Vider la variable de session pour qu'elle ne soit pas affichée de nouveau
                         $_SESSION["error_message"] = "";
                     }?>
                     </div>

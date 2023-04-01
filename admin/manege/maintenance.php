@@ -9,8 +9,9 @@ if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "CM") {
     header("Location: ../index.php");
     exit();
 }
-include("../../connex.inc.php");
-$conn = connex("sae4", "../../param.wamp");
+Include("../../connex.inc.php") ;
+Include("../../myparam.inc.php");
+$conn=connex(MYBASE, "../../myparam") ;
 
 ?>
 
@@ -20,6 +21,7 @@ $conn = connex("sae4", "../../param.wamp");
     <link rel="stylesheet" type="text/css" href="../../assets/css/styles.css">
     <link rel="stylesheet" type="text/css" href="../../assets/css/admin/styles.css">
     <link rel="stylesheet" type="text/css" href="../../assets/font/Source_Sans_Pro/font.css">
+            <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
         const navLinks = document.querySelectorAll('nav ul li a');
@@ -62,15 +64,12 @@ $conn = connex("sae4", "../../param.wamp");
 
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Récupérer les données du formulaire
         $id_manege = $_POST["id_manege"];
         $id_technicien = $_POST["id_tec"];
         $date = $_POST["date"];
 
-        // Préparer la requête SQL pour insérer une nouvelle maintenance
         $sql = "INSERT INTO Maintenance (Id_manege, Id_technicien, Date_maintenance) VALUES ('$id_manege', '$id_technicien', '$date')";
 
-        // Exécuter la requête SQL
         if (mysqli_query($conn, $sql)) {
             $_SESSION["Message"] = "La maintenance a été ajoutée avec succès";
             header("Location: index.php");
@@ -80,14 +79,12 @@ $conn = connex("sae4", "../../param.wamp");
         }
     }
 
-    // Récupérer les informations sur le manège
     $id_manege = $_GET["id_manege"];
     $sql = "SELECT * FROM Manege WHERE Id_manege = '".$id_manege."'";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
     $nom_manege = $row['Nom_manege'];
 
-    // Afficher le formulaire pour ajouter une nouvelle maintenance
     ?>
 
 
@@ -98,7 +95,6 @@ $conn = connex("sae4", "../../param.wamp");
         <label for="id_tec">ID du technicien:</label>
         <select name="id_tec">
             <?php
-            // Afficher les options pour les techniciens disponibles
             $sql_tec = "SELECT * FROM technicien WHERE id_atelier = (SELECT id_atelier FROM manege WHERE id_manege = '".$id_manege."')";
             $result_tec = mysqli_query($conn, $sql_tec);
             while ($r = mysqli_fetch_assoc($result_tec)) {
@@ -114,6 +110,5 @@ $conn = connex("sae4", "../../param.wamp");
     </html>
 
     <?php
-    // Fermer la connexion à la base de données
     mysqli_close($conn);
     ?>

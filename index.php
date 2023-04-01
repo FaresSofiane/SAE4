@@ -10,6 +10,8 @@ if (isset($_SESSION["nom_utilisateur"])) {
             <title>Parc d\'attraction</title>
             <link rel="stylesheet" type="text/css" href="assets/css/styles.css">
             <link rel="stylesheet" type="text/css" href="assets/font/Source_Sans_Pro/font.css">
+            <meta charset="UTF-8">
+            
         </head>
         <body>
             <div id="login">

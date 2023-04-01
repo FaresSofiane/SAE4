@@ -13,7 +13,8 @@ if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "Responsable") {
 }
 
 Include("../../connex.inc.php") ;
-$conn=connex("sae4", "../../param.wamp") ;
+Include("../../myparam.inc.php");
+$conn=connex(MYBASE, "../../myparam") ;
 
 
 ?>
@@ -28,6 +29,7 @@ $conn=connex("sae4", "../../param.wamp") ;
         <link rel="stylesheet" type="text/css" href="../../assets/css/admin/styles.css">
         <link rel="stylesheet" type="text/css" href="../../assets/css/admin/table.css">
         <link rel="stylesheet" type="text/css" href="../../assets/font/Source_Sans_Pro/font.css">
+            <meta charset="UTF-8">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script>const navLinks = document.querySelectorAll('nav ul li a');
 
@@ -63,9 +65,7 @@ $conn=connex("sae4", "../../param.wamp") ;
 
 
 <?php
-// Vérifier si le formulaire a été soumis
 if (isset($_POST['id_boutique'])) {
-    // Récupérer les valeurs du formulaire
     $id_boutique = $_POST['id_boutique'];
     $nom_boutique = $_POST['nom_boutique'];
     $emplacement = $_POST['Emplacement'];
@@ -73,28 +73,22 @@ if (isset($_POST['id_boutique'])) {
     $clientquotidien = $_POST['clientquotidien'];
 
 
-    // Requête de mise à jour du manège
     $sql = "UPDATE Boutique SET Nom_boutique='$nom_boutique', Emplacement='$emplacement',  Chiffre_affaires='$chiffreaffaire', Nb_clients_quotidiens='$clientquotidien' WHERE Id_boutique='$id_boutique'";
 
-    // Exécuter la requête de mise à jour du manège
     if (mysqli_query($conn, $sql)) {
         $_SESSION["Message"] = "La boutique a été modifié avec succès";
     } else {
         $_SESSION["Message"] = "Erreur lors de la modification de la boutique: " . mysqli_error($conn);
     }
 
-    // Rediriger vers la page d'accueil
     header("Location: index.php");
     mysqli_close($conn);
 } else {
-    // Récupérer l'ID du manège
     $id_boutique = $_GET['id_boutique'];
 
-    // Requête pour récupérer les informations du manège
     $sql = "SELECT * FROM Boutique WHERE Id_boutique='$id_boutique'";
     $result = mysqli_query($conn, $sql);
 
-    // Récupérer les informations du manège
     $row = mysqli_fetch_assoc($result);
     $nom_boutique = $row['Nom_boutique'];
     $emplacement = $row['Emplacement'];
@@ -104,16 +98,13 @@ if (isset($_POST['id_boutique'])) {
 
 }
 
-    // Afficher le formulaire de modification du manège
     ?>
 
     <?php
 
-    // Récupérer les zones disponibles
     $sql_zones = "SELECT * FROM Zone";
     $result_zones = mysqli_query($conn, $sql_zones);
 
-// Récupérer les CM disponibles
     $sql_cm = "SELECT * FROM CM";
     $result_cm = mysqli_query($conn, $sql_cm);
 
@@ -128,7 +119,6 @@ if (isset($_POST['id_boutique'])) {
         <label for="Emplacement">Emplacement:</label>
         <select name="Emplacement">
             <?php
-            // Afficher les options pour les CM disponibles
             while ($row = mysqli_fetch_assoc($result_zones)) {
                 echo '<option value="' . $row["Id_zone"] . '">' . $row["Nom_zone"] . '</option>';
 

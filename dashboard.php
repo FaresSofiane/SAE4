@@ -17,6 +17,7 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     <title>Parc d'attraction</title>
     <link rel="stylesheet" type="text/css" href="assets/css/styles.css">
     <link rel="stylesheet" type="text/css" href="assets/font/Source_Sans_Pro/font.css">
+            <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>const navLinks = document.querySelectorAll('nav ul li a');
 
@@ -51,11 +52,6 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     </nav>
 </div>
 
-<?php
-
-echo $_SESSION["role"];
-
-?>
 </body>
 
 </html>

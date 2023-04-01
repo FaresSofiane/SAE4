@@ -1,44 +1,41 @@
 <?php
 session_start();
 
-// Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['id'])) {
     header("Location: ../index.php");
     exit();
 }
 
 require_once '../connex.inc.php';
-require_once '../param.wamp.inc.php';
-$idcom = connex(MYBASE, "../param.wamp");
+require_once '../myparam.inc.php';
+$idcom = connex(MYBASE, "../myparam");
 
-// Récupérer les données du formulaire
 $ss = $_SESSION['numero_ss'];
 $ancienmotdepasse = $_POST['oldpassword'];
 $nouveaumotdepasse = $_POST['newpassword'];
 $nouveaumotdepasse2 = $_POST['confirmpassword'];
 
-// Vérifier que les champs ne sont pas vides
 if (empty($ss) || empty($ancienmotdepasse) || empty($nouveaumotdepasse) || empty($nouveaumotdepasse2)) {
     $error_message = "Tous les champs sont requis.";
 } else {
-
-    // Vérifier que le nouveau mot de passe correspond à la confirmation
     if ($nouveaumotdepasse !== $nouveaumotdepasse2) {
         $error_message = "Le nouveau mot de passe ne correspond pas à la confirmation.";
     } else {
-
-        // Vérifier que l'ancien mot de passe est correct
-        $sql_check ="SELECT Mot_de_passe FROM Personnel WHERE Numero_SS = '$ss' AND Mot_de_passe = '$ancienmotdepasse'";
-        $result = mysqli_query($idcom, $sql_check);
+        $hashed_password = hash('sha256', $nouveaumotdepasse);
+        $hashed_password2 = hash('sha256', $ancienmotdepasse);
+        $sql_check = "SELECT Mot_de_passe FROM Personnel WHERE Numero_SS = ? AND Mot_de_passe = ?";
+        $stmt = mysqli_prepare($idcom, $sql_check);
+        mysqli_stmt_bind_param($stmt, "ss", $ss, $hashed_password2);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
 
         if (mysqli_num_rows($result) > 0) {
+            $sql_update = "UPDATE Personnel SET Mot_de_passe = ? WHERE Numero_SS = ? AND Mot_de_passe = ?";
+            $stmt = mysqli_prepare($idcom, $sql_update);
+            mysqli_stmt_bind_param($stmt, "sss", $hashed_password, $ss, $hashed_password2);
+            mysqli_stmt_execute($stmt);
 
-            // Mettre à jour le mot de passe de l'utilisateur
-            $sql_update= "UPDATE Personnel SET Mot_de_passe = '$nouveaumotdepasse' WHERE Numero_SS = '$ss' AND Mot_de_passe = '$ancienmotdepasse'";
-            $result = mysqli_query($idcom, $sql_update);
-
-            // Rediriger vers index.php si la mise à jour a été effectuée avec succès
-            if ($result) {
+            if (mysqli_affected_rows($idcom) > 0) {
                 $error_message = "Le mot de passe a été mis à jour avec succès.";
             } else {
                 $error_message = "La mise à jour du mot de passe a échoué.";
@@ -49,8 +46,8 @@ if (empty($ss) || empty($ancienmotdepasse) || empty($nouveaumotdepasse) || empty
         }
     }
 }
-$_SESSION['error_message'] = $error_message;
-mysqli_close($idcom); // Fermer la connexion à la base de données
-header("Location: index.php");
 
+$_SESSION['error_message'] = $error_message;
+mysqli_close($idcom);
+header("Location: index.php");
 ?>

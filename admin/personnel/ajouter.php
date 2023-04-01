@@ -7,13 +7,15 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     exit();
 }
 
-if ($_SESSION["role"] != "Directeur") {
+if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "CM" && $_SESSION["role"] != "Responsable") {
     header("Location: ../index.php");
     exit();
 }
 Include("../../connex.inc.php") ;
-$conn=connex("sae4", "../../param.wamp") ;
+Include("../../myparam.inc.php");
+$conn=connex(MYBASE, "../../myparam") ;
 
+Include("role.php") ;
 
 ?>
 
@@ -26,6 +28,7 @@ $conn=connex("sae4", "../../param.wamp") ;
     <link rel="stylesheet" type="text/css" href="../../assets/css/styles.css">
     <link rel="stylesheet" type="text/css" href="../../assets/css/admin/styles.css">
     <link rel="stylesheet" type="text/css" href="../../assets/font/Source_Sans_Pro/font.css">
+    <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>const navLinks = document.querySelectorAll('nav ul li a');
 
@@ -43,7 +46,7 @@ $conn=connex("sae4", "../../param.wamp") ;
     <h1>Starlight Park</h1>
     <nav>
         <ul>
-<?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="CM"){echo '<li><a href="admin">Admin</a></li>';}?>            <li><a href="../../index.php">Accueil</a></li>
+            <?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="CM"){echo '<li><a href="../index.php">Admin</a></li>';}?>            <li><a href="../../index.php">Accueil</a></li>
             <li><a href="#">Vente</a></li>
             <li><a href="../../manege">Manege</a></li>
             <li class="dropdown">
@@ -61,7 +64,6 @@ $conn=connex("sae4", "../../param.wamp") ;
 <div class="ajouter">
 <?php
 
-// Traitement du formulaire de modification
 if (isset($_POST['modifier'])) {
     echo "Modification du personnel";
 
@@ -79,10 +81,6 @@ if (isset($_POST['modifier'])) {
         $id_boutique = $_POST['boutique'];
     }
 
-
-
-
-    // Modification des données du personnel
     $requete = "INSERT INTO Personnel (Numero_SS, Nom, Prenom, Mot_de_passe)
 VALUES ('$id', '$nom', '$prenom', '1234')
 ";
@@ -108,9 +106,7 @@ VALUES ('$id', '$nom', '$prenom', '1234')
 echo $requete;
 mysqli_query($conn, $requete);
 
-
-    // Redirection vers la page de liste du personnel
-    $_SESSION["Message"] = "Le personnel a été modifié avec succès.";
+ $_SESSION["Message"] = "Le personnel a été modifié avec succès.";
         echo $_SESSION["Message"];
     exit();
 }
@@ -134,7 +130,6 @@ mysqli_query($conn, $requete);
     <div id="boutique-select" style="display:none">
         <select name="boutique">
             <?php
-            // Afficher les options pour les CM disponibles
             $sql_cm = "SELECT * FROM boutique where Id_boutique not in (select Id_boutique from responsable)";
             $result_boutique = mysqli_query($conn, $sql_cm);
             while ($row = mysqli_fetch_assoc($result_boutique)) {
@@ -146,7 +141,6 @@ mysqli_query($conn, $requete);
     <div id="techni-select" style="display:none">
         <select name="atelier">
             <?php
-            // Afficher les options pour les CM disponibles
             $sql_t = "SELECT * FROM atelier";
             $result_t = mysqli_query($conn, $sql_t);
             while ($row = mysqli_fetch_assoc($result_t)) {

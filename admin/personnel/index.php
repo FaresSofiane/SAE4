@@ -12,7 +12,8 @@ if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "CM" && $_SESSION["
     exit();
 }
 Include("../../connex.inc.php") ;
-$conn=connex("sae4", "../../param.wamp") ;
+Include("../../myparam.inc.php");
+$conn=connex(MYBASE, "../../myparam") ;
 
 Include("role.php") ;
 
@@ -27,6 +28,7 @@ Include("role.php") ;
     <link rel="stylesheet" type="text/css" href="../../assets/css/styles.css">
     <link rel="stylesheet" type="text/css" href="../../assets/css/admin/styles.css">
     <link rel="stylesheet" type="text/css" href="../../assets/font/Source_Sans_Pro/font.css">
+            <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>const navLinks = document.querySelectorAll('nav ul li a');
 
@@ -44,7 +46,7 @@ Include("role.php") ;
     <h1>Starlight Park</h1>
     <nav>
         <ul>
-<?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="CM"){echo '<li><a href="admin">Admin</a></li>';}?>            <li><a href="../../index.php">Accueil</a></li>
+<?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="CM"){echo '<li><a href="../index.php">Admin</a></li>';}?>            <li><a href="../../index.php">Accueil</a></li>
             <li><a href="#">Vente</a></li>
             <li><a href="../../manege">Manege</a></li>
             <li class="dropdown">
@@ -89,11 +91,9 @@ Include("role.php") ;
 
         }
     }
-    // Affichage des manèges dans un tableau
 
     echo "</tbody></table>";
 
-    // Fermeture de la connexion à la base de données
     $conn->close();
     echo "</div>";
     if (isset($_SESSION["Message"])){

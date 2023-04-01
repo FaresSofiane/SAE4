@@ -66,22 +66,49 @@ $conn=connex("sae4", "../../param.wamp") ;
 if ($_SESSION["role"] == "Directeur") {
     $sql = "SELECT * FROM Manege";
     $result = $conn->query($sql);
-    echo "<table><thead><tr><th>Id manège</th><th>Nom manège</th><th>Description</th><th>Taille min. client</th><th>Id CM</th><th>Id zone</th><th>Modifier</th><th>Supprimer</th></tr><thead><tbody>";
+    echo "<table><thead><tr><th>Id manège</th><th>Nom manège</th><th>Description</th><th>Taille min. client</th><th>Id CM</th><th>Id zone</th><th>Modifier</th><th>Supprimer</th><th>Maintenance</th><th>Date de la maintenance</th></tr><thead><tbody>";
     while($row = $result->fetch_assoc()) {
         echo "<tr><td>" . $row["Id_manege"]. "</td><td>" . $row["Nom_manege"]. "</td><td>" . $row["Description"]. "</td><td>" . $row["Taille_min_client"]. "</td><td>" . $row["Id_cm"]. "</td><td>" . $row["Id_zone"]. "</td>";
         echo "<td><a href='modifier.php?id_manege=".$row["Id_manege"]."'>Modifier</a></td>";
         echo "<td><a href='supprimer.php?id_manege=".$row["Id_manege"]."'>Supprimer</a></td>";
+        $sqm = "SELECT Id_maintenance ,Date_maintenance FROM Maintenance WHERE Id_manege = '" . $row["Id_manege"]. "'";
+        $resultm = $conn->query($sqm);
+
+        if ($resultm->num_rows > 0) {
+            $resultm = $resultm->fetch_assoc();
+            echo "<td><a href='fin_maintenance.php?id_manege=".$row["Id_manege"]."'>Fin maintenance</a></td>";
+            echo '<td><a>' . $resultm['Date_maintenance'] . '</a></td>';
+
+        } else {
+            echo "<td><a href='maintenance.php?id_manege=".$row["Id_manege"]."'>Maintenance</a></td>";
+            echo "<td><a>Pas de maintenance</a></td>";
+
+    }
 
     }
     echo "</tbody></table>";
 } else {
     $sql = "SELECT * FROM Manege WHERE Id_cm = '" . $_SESSION["id_cm"]. "'";
         $result = $conn->query($sql);
-    echo "<table><thead><tr><th>Id manège</th><th>Nom manège</th><th>Description</th><th>Taille min. client</th><th>Id CM</th><th>Id zone</th><th>Modifier</th><th>Supprimer</th></tr><thead><tbody>";
+    echo "<table><thead><tr><th>Id manège</th><th>Nom manège</th><th>Description</th><th>Taille min. client</th><th>Id CM</th><th>Id zone</th><th>Modifier</th><th>Supprimer</th><th>Maintenance</th><th>Date de la maintenance</th></tr><thead><tbody>";
 while($row = $result->fetch_assoc()) {
     echo "<tr><td>" . $row["Id_manege"]. "</td><td>" . $row["Nom_manege"]. "</td><td>" . $row["Description"]. "</td><td>" . $row["Taille_min_client"]. "</td><td>" . $row["Id_cm"]. "</td><td>" . $row["Id_zone"]. "</td>";
     echo "<td><a href='modifier.php?id_manege=".$row["Id_manege"]."'>Modifier</a></td>";
     echo "<td><a href='supprimer.php?id_manege=".$row["Id_manege"]."'>Supprimer</a></td>";
+    $sqm = "SELECT Id_maintenance ,Date_maintenance FROM Maintenance WHERE Id_manege = '" . $row["Id_manege"]. "'";
+    $resultm = $conn->query($sqm);
+
+    if ($resultm->num_rows > 0) {
+        $resultm = $resultm->fetch_assoc();
+        echo "<td><a href='fin_maintenance.php?id_manege=".$row["Id_manege"]."'>Fin maintenance</a></td>";
+        echo '<td><a>' . $resultm['Date_maintenance'] . '</a></td>';
+
+    } else {
+        echo "<td><a href='maintenance.php?id_manege=".$row["Id_manege"]."'>Maintenance</a></td>";
+        echo "<td><a>Pas de maintenance</a></td>";
+
+    }
+
 
 }
 echo "</tbody></table>";

@@ -6,7 +6,7 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     header("Location: ../../index.php");
     exit();
 }
-if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "CM") {
+if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "Responsable") {
     header("Location: ../index.php");
     exit();
 }
@@ -43,7 +43,7 @@ $conn=connex("sae4", "../../param.wamp") ;
     <h1>Starlight Park</h1>
     <nav>
         <ul>
-<?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="CM"){echo '<li><a href="admin">Admin</a></li>';}?>            <li><a href="../../index.php">Accueil</a></li>
+<?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="Responsable"){echo '<li><a href="./index.php">Admin</a></li>';}?>            <li><a href="../../dashboard.php">Accueil</a></li>
             <li><a href="#">Vente</a></li>
             <li><a href="../../manege">Manege</a></li>
             <li class="dropdown">
@@ -63,18 +63,37 @@ $conn=connex("sae4", "../../param.wamp") ;
 <div class="resultat">
 
 <?php
-$sql = "SELECT * FROM Boutique";
-$result = $conn->query($sql);
+if ($_SESSION["role"] == "Directeur") {
+    $sql = "SELECT * FROM Boutique";
+    $result = $conn->query($sql);
+    // Affichage des manèges dans un tableau
+    echo "<table><thead><tr><th>Id boutique</th><th>Nom boutique</th><th>Emplacement</th><th>Chiffres d'affaires</th><th>Nombres de clients quotidiens</th><th>Modifier</th><th>Supprimer</th></tr><thead><tbody>";
+    while($row = $result->fetch_assoc()) {
+        echo "<tr><td>" . $row["Id_boutique"]. "</td><td>" . $row["Nom_boutique"]. "</td><td>" . $row["Emplacement"]. "</td><td>" . $row["Chiffre_affaires"]. "</td><td>" . $row["Nb_clients_quotidiens"]. "</td>";
+        echo "<td><a href='modifier.php?id_boutique=".$row["Id_boutique"]."'>Modifier</a></td>";
+        echo "<td><a href='supprimer.php?id_boutique=".$row["Id_boutique"]."'>Supprimer</a></td>";
 
-// Affichage des manèges dans un tableau
-echo "<table><thead><tr><th>Id boutique</th><th>Nom boutique</th><th>Emplacement</th><th>Chiffres d'affaires</th><th>Nombres de clients quotidiens</th><th>Modifier</th><th>Supprimer</th></tr><thead><tbody>";
-while($row = $result->fetch_assoc()) {
-    echo "<tr><td>" . $row["Id_boutique"]. "</td><td>" . $row["Nom_boutique"]. "</td><td>" . $row["Emplacement"]. "</td><td>" . $row["Chiffre_affaires"]. "</td><td>" . $row["Nb_clients_quotidiens"]. "</td>";
-    echo "<td><a href='modifier.php?id_boutique=".$row["Id_boutique"]."'>Modifier</a></td>";
-    echo "<td><a href='supprimer.php?id_boutique=".$row["Id_boutique"]."'>Supprimer</a></td>";
+    }
+    echo "</tbody></table>";
+} else {
+    $sql = "SELECT * FROM Boutique WHERE Id_boutique = " . $_SESSION['id_boutique'];
+    $result = $conn->query($sql);
+
+// Affichage des boutiques dans un tableau
+    echo "<table><thead><tr><th>Id boutique</th><th>Nom boutique</th><th>Emplacement</th><th>Chiffre d'affaires</th><th>Nombre de clients quotidiens</th><th>Modifier</th></tr></thead><tbody>";
+
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr><td>" . $row["Id_boutique"] . "</td><td>" . $row["Nom_boutique"] . "</td><td>" . $row["Emplacement"] . "</td><td>" . $row["Chiffre_affaires"] . "</td><td>" . $row["Nb_clients_quotidiens"] . "</td>";
+        echo "<td><a href='modifier.php?id_boutique=" . $row["Id_boutique"] . "'>Modifier</a></td></tr>";
+    }
+
+    echo "</tbody></table>";
+
 
 }
-echo "</tbody></table>";
+
+
+
 
 // Fermeture de la connexion à la base de données
 $conn->close();

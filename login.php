@@ -80,11 +80,17 @@ if (isset($_POST['submit'])) {
         $_SESSION['id_cm'] = $row["id_cm"];
         }
 
+        if ($_SESSION['role'] == "Responsable") {
+            $sql = "SELECT * FROM Responsable WHERE Numero_SS = '".$row["Numero_SS"]."'";
+            $result = mysqli_query($idcom, $sql);
+            $row = mysqli_fetch_assoc($result);
+            $_SESSION['id_boutique'] = $row["id_boutique"];
+            $_SESSION['id_responsable'] = $row["Id_responsable"];
+            echo $_SESSION['id_boutique'];
+            echo $_SESSION['id_responsable'];
 
-
-
+        }
         header('Location: dashboard.php');
-
     } else {
 
 

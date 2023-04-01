@@ -7,7 +7,7 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     exit();
 }
 
-if ($_SESSION["role"] != "Directeur") {
+if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "CM" && $_SESSION["role"] != "Responsable") {
     header("Location: ../index.php");
     exit();
 }
@@ -42,7 +42,7 @@ $conn=connex("sae4", "../param.wamp") ;
     <h1>Starlight Park</h1>
     <nav>
         <ul>
-            <?php if ($_SESSION["role"]=="Directeur"){echo '<li><a href="./">Admin</a></li>';}?>
+            <?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="CM" || $_SESSION['role'] == "Responsable"){echo '<li><a href="admin">Admin</a></li>';}?>
 
             <li><a href="../dashboard.php">Accueil</a></li>
             <li><a href="#">Vente</a></li>

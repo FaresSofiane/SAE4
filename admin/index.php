@@ -7,7 +7,7 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     exit();
 }
 
-if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "CM") {
+if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "CM" && $_SESSION["role"] != "Responsable") {
     header("Location: ../index.php");
     exit();
 }
@@ -44,7 +44,7 @@ if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "CM") {
     <h1>Starlight Park</h1>
     <nav>
         <ul>
-           <?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="CM"){echo '<li><a href="admin">Admin</a></li>';}?>
+           <?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="CM" || $_SESSION['role'] == "Responsable"){echo '<li><a href="admin">Admin</a></li>';}?>
             <li><a href="../dashboard.php">Accueil</a></li>
             <li><a href="#">Vente</a></li>
             <li><a href="manege">Manege</a></li>
@@ -62,13 +62,32 @@ if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "CM") {
 
 <div class="Bouton-redirect">
 
+    <?php
+
+    if ($_SESSION['role'] == "Directeur" || $_SESSION['role'] == "CM") {
+        ?>
     <button onclick="window.location.href='manege'">manège</button>
-    <button onclick="window.location.href='personnel'">Personnel</button>
+    <?php
+    }
+    if ($_SESSION['role'] == "Directeur" || $_SESSION['role'] == "Responsable") {
+
+        ?>
+
+
     <button  onclick="window.location.href='boutique'">Boutique</button>
-    <button onclick="window.location.href='quiarepare.php'">Qui a réparé ?</button>
-    <button onclick="window.location.href='chiffre_affaire_objet.php'">Chiffres d'affaires objet unitaire</button>
-    <button onclick="window.location.href='piece_utilise.php'">Piece utilise lors de la derniere maintenance</button>
-    <button onclick="window.location.href='objet_vendu.php'">Objet vendu par tout les magasins</button>
+        <?php }
+    if ($_SESSION["role"] == "Directeur" || $_SESSION["role"] == "CM" || $_SESSION["role"] == "Responsable") {
+        ?>
+        <button onclick="window.location.href='personnel'">Personnel</button>
+        <button onclick="window.location.href='quiarepare.php'">Qui a réparé ?</button>
+        <button onclick="window.location.href='chiffre_affaire_objet.php'">Chiffres d'affaires objet unitaire</button>
+        <button onclick="window.location.href='piece_utilise.php'">Piece utilise lors de la derniere maintenance</button>
+        <button onclick="window.location.href='objet_vendu.php'">Objet vendu par tout les magasins</button>';*
+        <?php
+    }
+
+    ?>
+
 
 
 

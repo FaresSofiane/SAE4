@@ -39,7 +39,7 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     <h1>Starlight Park</h1>
     <nav>
         <ul>
-            <?php if ($_SESSION["role"]=="Directeur"){echo '<li><a href="../admin">Admin</a></li>';}?>
+            <?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="CM" || $_SESSION['role'] == "Responsable"){echo '<li><a href="../admin">Admin</a></li>';}?>
 
             <li><a href="../index.php">Accueil</a></li>
             <li><a href="#">Vente</a></li>
@@ -104,6 +104,8 @@ if (!isset($_SESSION["nom_utilisateur"])) {
                 </div>
                 <div class="user">
                     <h1>Mes informations personnelles</h1>
+                    <?php echo $_SESSION["id_boutique"]?>
+
                     <br>
                     <a>Vous pouvez modifier vos informations personnelles ici</a>
                     <br>

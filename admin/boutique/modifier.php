@@ -7,7 +7,7 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     exit();
 }
 
-if ($_SESSION["role"] != "Directeur") {
+if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "Responsable") {
     header("Location: ../index.php");
     exit();
 }
@@ -45,15 +45,15 @@ $conn=connex("sae4", "../../param.wamp") ;
     <h1>Starlight Park</h1>
     <nav>
         <ul>
-           <?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="CM"){echo '<li><a href="admin">Admin</a></li>';}?>
-            <li><a href="index.php">Accueil</a></li>
+            <?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="Responsable"){echo '<li><a href="admin">Admin</a></li>';}?>            <li><a href="../../index.php">Accueil</a></li>
+
             <li><a href="#">Vente</a></li>
-            <li><a href="manege">Manege</a></li>
+            <li><a href="../../manege">Manege</a></li>
             <li class="dropdown">
                 <a href="#"><?php echo $_SESSION["nom_utilisateur"]?></a>
                 <div class="dropdown-content">
-                    <a href="compte">Mon compte</a>
-                    <a href="deconnection.php" class="deconnexion-btn">Déconnexion</a>
+                    <a href="../../compte">Mon compte</a>
+                    <a href="../../deconnection.php" class="deconnexion-btn">Déconnexion</a>
 
                 </div>
             </li>
@@ -68,7 +68,7 @@ if (isset($_POST['id_boutique'])) {
     // Récupérer les valeurs du formulaire
     $id_boutique = $_POST['id_boutique'];
     $nom_boutique = $_POST['nom_boutique'];
-    $emplacement = $_POST['emplacement'];
+    $emplacement = $_POST['Emplacement'];
     $chiffreaffaire = $_POST['chiffreaffaire'];
     $clientquotidien = $_POST['clientquotidien'];
 
@@ -137,7 +137,7 @@ if (isset($_POST['id_boutique'])) {
         </select>
         <br>
         <label for="ChiffreAffaire">Chiffre d'affaire:</label>
-        <input type="number" name="ChiffreAffaire" value="<?php echo $chiffreaffaire ?>">
+        <input type="number" name="chiffreaffaire" value="<?php echo $chiffreaffaire ?>">
         <br>
         <label for="clientquotidien">Nombre de clients quotidiens</label>
         <input type="number" name="clientquotidien" value="<?php echo $clientquotidien ?>">

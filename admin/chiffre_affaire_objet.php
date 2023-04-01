@@ -7,7 +7,7 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     exit();
 }
 
-if ($_SESSION["role"] != "Directeur") {
+if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "CM" && $_SESSION["role"] != "Responsable") {
     header("Location: ../index.php");
     exit();
 }

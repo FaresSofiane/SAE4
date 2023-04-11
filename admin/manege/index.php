@@ -6,7 +6,7 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     header("Location: ../../index.php");
     exit();
 }
-if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "CM") {
+if ($_SESSION["role"] != "directeur" && $_SESSION["role"] != "cm") {
     header("Location: ../index.php");
     exit();
 }
@@ -45,7 +45,7 @@ $conn=connex(MYBASE, "../../myparam") ;
     <h1>Starlight Park</h1>
     <nav>
         <ul>
-<?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="CM"){echo '<li><a href="admin">Admin</a></li>';}?>            <li><a href="../../index.php">Accueil</a></li>
+<?php if ($_SESSION["role"]=="directeur" || $_SESSION['role'] =="cm"){echo '<li><a href="admin">Admin</a></li>';}?>            <li><a href="../../index.php">Accueil</a></li>
             <li><a href="#">Vente</a></li>
             <li><a href="../../manege">Manege</a></li>
             <li class="dropdown">
@@ -65,15 +65,15 @@ $conn=connex(MYBASE, "../../myparam") ;
 <div class="resultat">
 
 <?php
-if ($_SESSION["role"] == "Directeur") {
-    $sql = "SELECT * FROM Manege";
+if ($_SESSION["role"] == "directeur") {
+    $sql = "SELECT * FROM manege";
     $result = $conn->query($sql);
-    echo "<table><thead><tr><th>Id manège</th><th>Nom manège</th><th>Description</th><th>Taille min. client</th><th>Id CM</th><th>Id zone</th><th>Modifier</th><th>Supprimer</th><th>Maintenance</th><th>Date de la maintenance</th></tr><thead><tbody>";
+    echo "<table><thead><tr><th>Id manège</th><th>Nom manège</th><th>Description</th><th>Taille min. client</th><th>Id cm</th><th>Id zone</th><th>Modifier</th><th>Supprimer</th><th>maintenance</th><th>Date de la maintenance</th></tr><thead><tbody>";
     while($row = $result->fetch_assoc()) {
         echo "<tr><td>" . $row["Id_manege"]. "</td><td>" . $row["Nom_manege"]. "</td><td>" . $row["Description"]. "</td><td>" . $row["Taille_min_client"]. "</td><td>" . $row["Id_cm"]. "</td><td>" . $row["Id_zone"]. "</td>";
         echo "<td><a href='modifier.php?id_manege=".$row["Id_manege"]."'>Modifier</a></td>";
         echo "<td><a href='supprimer.php?id_manege=".$row["Id_manege"]."'>Supprimer</a></td>";
-        $sqm = "SELECT Id_maintenance ,Date_maintenance FROM Maintenance WHERE Id_manege = '" . $row["Id_manege"]. "'";
+        $sqm = "SELECT Id_maintenance ,Date_maintenance FROM maintenance WHERE Id_manege = '" . $row["Id_manege"]. "'";
         $resultm = $conn->query($sqm);
 
         if ($resultm->num_rows > 0) {
@@ -82,7 +82,7 @@ if ($_SESSION["role"] == "Directeur") {
             echo '<td><a>' . $resultm['Date_maintenance'] . '</a></td>';
 
         } else {
-            echo "<td><a href='maintenance.php?id_manege=".$row["Id_manege"]."'>Maintenance</a></td>";
+            echo "<td><a href='maintenance.php?id_manege=".$row["Id_manege"]."'>maintenance</a></td>";
             echo "<td><a>Pas de maintenance</a></td>";
 
     }
@@ -90,14 +90,14 @@ if ($_SESSION["role"] == "Directeur") {
     }
     echo "</tbody></table>";
 } else {
-    $sql = "SELECT * FROM Manege WHERE Id_cm = '" . $_SESSION["id_cm"]. "'";
+    $sql = "SELECT * FROM manege WHERE Id_cm = '" . $_SESSION["id_cm"]. "'";
         $result = $conn->query($sql);
-    echo "<table><thead><tr><th>Id manège</th><th>Nom manège</th><th>Description</th><th>Taille min. client</th><th>Id CM</th><th>Id zone</th><th>Modifier</th><th>Supprimer</th><th>Maintenance</th><th>Date de la maintenance</th></tr><thead><tbody>";
+    echo "<table><thead><tr><th>Id manège</th><th>Nom manège</th><th>Description</th><th>Taille min. client</th><th>Id cm</th><th>Id zone</th><th>Modifier</th><th>Supprimer</th><th>maintenance</th><th>Date de la maintenance</th></tr><thead><tbody>";
 while($row = $result->fetch_assoc()) {
     echo "<tr><td>" . $row["Id_manege"]. "</td><td>" . $row["Nom_manege"]. "</td><td>" . $row["Description"]. "</td><td>" . $row["Taille_min_client"]. "</td><td>" . $row["Id_cm"]. "</td><td>" . $row["Id_zone"]. "</td>";
     echo "<td><a href='modifier.php?id_manege=".$row["Id_manege"]."'>Modifier</a></td>";
     echo "<td><a href='supprimer.php?id_manege=".$row["Id_manege"]."'>Supprimer</a></td>";
-    $sqm = "SELECT Id_maintenance ,Date_maintenance FROM Maintenance WHERE Id_manege = '" . $row["Id_manege"]. "'";
+    $sqm = "SELECT Id_maintenance ,Date_maintenance FROM maintenance WHERE Id_manege = '" . $row["Id_manege"]. "'";
     $resultm = $conn->query($sqm);
 
     if ($resultm->num_rows > 0) {
@@ -106,7 +106,7 @@ while($row = $result->fetch_assoc()) {
         echo '<td><a>' . $resultm['Date_maintenance'] . '</a></td>';
 
     } else {
-        echo "<td><a href='maintenance.php?id_manege=".$row["Id_manege"]."'>Maintenance</a></td>";
+        echo "<td><a href='maintenance.php?id_manege=".$row["Id_manege"]."'>maintenance</a></td>";
         echo "<td><a>Pas de maintenance</a></td>";
 
     }

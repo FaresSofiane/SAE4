@@ -5,34 +5,34 @@ function chercherRole($numero_ss) {
 
     $conn=connex(MYBASE, "../../myparam") ;
 
-    $sql = "SELECT * FROM Directeur WHERE Numero_SS = '$numero_ss'";
+    $sql = "SELECT * FROM directeur WHERE Numero_SS = '$numero_ss'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
-        return "Directeur";
+        return "directeur";
     }
 
-    $sql = "SELECT * FROM CM WHERE Numero_SS = '$numero_ss'";
+    $sql = "SELECT * FROM cm WHERE Numero_SS = '$numero_ss'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
-        return "CM";
+        return "cm";
     }
 
-    $sql = "SELECT * FROM Technicien WHERE Numero_SS = '$numero_ss'";
+    $sql = "SELECT * FROM technicien WHERE Numero_SS = '$numero_ss'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
-        return "Technicien";
+        return "technicien";
     }
 
-    $sql = "SELECT * FROM Responsable WHERE Numero_SS = '$numero_ss'";
+    $sql = "SELECT * FROM responsable WHERE Numero_SS = '$numero_ss'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
-        return "Responsable";
+        return "responsable";
     }
 
-    $sql = "SELECT * FROM Employe WHERE Numero_SS = '$numero_ss'";
+    $sql = "SELECT * FROM employe WHERE Numero_SS = '$numero_ss'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
-        return "Employe";
+        return "employe";
     }
 
 

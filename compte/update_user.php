@@ -19,7 +19,7 @@ if(isset($_POST['ss']) && isset($_POST['nom']) && isset($_POST['prenom'])) {
     $nom = mysqli_real_escape_string($idcom, $nom);
     $prenom = mysqli_real_escape_string($idcom, $prenom);
 
-    $requete = "UPDATE Personnel SET Numero_SS='$ss', Nom='$nom', Prenom='$prenom' WHERE Numero_SS='" . $_SESSION['numero_ss'] . "'";
+    $requete = "UPDATE personnel SET Numero_SS='$ss', Nom='$nom', Prenom='$prenom' WHERE Numero_SS='" . $_SESSION['numero_ss'] . "'";
     $resultat = mysqli_query($idcom, $requete);
 
     if($resultat) {

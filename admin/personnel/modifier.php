@@ -7,7 +7,7 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     exit();
 }
 
-if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "CM" && $_SESSION["role"] != "Responsable") {
+if ($_SESSION["role"] != "directeur" && $_SESSION["role"] != "cm" && $_SESSION["role"] != "responsable") {
     header("Location: ../index.php");
     exit();
 }
@@ -46,7 +46,7 @@ Include("role.php") ;
     <h1>Starlight Park</h1>
     <nav>
         <ul>
-            <?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="CM"){echo '<li><a href="../index.php">Admin</a></li>';}?>            <li><a href="../../index.php">Accueil</a></li>
+            <?php if ($_SESSION["role"]=="directeur" || $_SESSION['role'] =="cm"){echo '<li><a href="../index.php">Admin</a></li>';}?>            <li><a href="../../index.php">Accueil</a></li>
             <li><a href="#">Vente</a></li>
             <li><a href="../../manege">Manege</a></li>
             <li class="dropdown">
@@ -80,43 +80,43 @@ if (isset($_POST['modifier'])) {
     echo $prenom;
     echo $role;
 
-    $requete = "UPDATE Personnel SET Numero_SS='$id', Nom='$nom', Prenom='$prenom' WHERE Numero_SS='$id'";
+    $requete = "UPDATE personnel SET Numero_SS='$id', Nom='$nom', Prenom='$prenom' WHERE Numero_SS='$id'";
     mysqli_query($conn, $requete);
 
     if ($role != chercherRole($id)){
         echo chercherRole($id) ;
     switch (chercherRole($id)) {
 
-        case 'CM':
-            $requete = "DELETE FROM CM WHERE Numero_SS = '$id'";
+        case 'cm':
+            $requete = "DELETE FROM cm WHERE Numero_SS = '$id'";
             break;
-        case 'Technicien':
-            $requete = "DELETE FROM Technicien WHERE Numero_SS = '$id'";
+        case 'technicien':
+            $requete = "DELETE FROM technicien WHERE Numero_SS = '$id'";
             break;
-        case 'Employe':
-            $requete = "DELETE FROM Employe WHERE Numero_SS = '$id'";
+        case 'employe':
+            $requete = "DELETE FROM employe WHERE Numero_SS = '$id'";
             break;
-        case 'Responsable':
-            $requete = "DELETE FROM Responsable WHERE Numero_SS = '$id'";
+        case 'responsable':
+            $requete = "DELETE FROM responsable WHERE Numero_SS = '$id'";
             break;
         default:
             break;
     }
     switch ($role) {
-        case 'CM':
-            $requete = "INSERT INTO CM (Numero_SS) VALUES ('$id') ON DUPLICATE KEY UPDATE Numero_SS='$id'";
+        case 'cm':
+            $requete = "INSERT INTO cm (Numero_SS) VALUES ('$id') ON DUPLICATE KEY UPDATE Numero_SS='$id'";
             break;
-        case 'Technicien':
-            $requete = "INSERT INTO Technicien (Numero_SS) VALUES ('$id') ON DUPLICATE KEY UPDATE Numero_SS='$id'";
+        case 'technicien':
+            $requete = "INSERT INTO technicien (Numero_SS) VALUES ('$id') ON DUPLICATE KEY UPDATE Numero_SS='$id'";
             break;
-        case 'Employe':
-            $requete = "INSERT INTO Employe (Numero_SS) VALUES ('$id') ON DUPLICATE KEY UPDATE Numero_SS='$id'";
+        case 'employe':
+            $requete = "INSERT INTO employe (Numero_SS) VALUES ('$id') ON DUPLICATE KEY UPDATE Numero_SS='$id'";
             break;
-        case 'Responsable':
-            $requete = "INSERT INTO Responsable (Numero_SS) VALUES ('$id') ON DUPLICATE KEY UPDATE Numero_SS='$id'";
+        case 'responsable':
+            $requete = "INSERT INTO responsable (Numero_SS) VALUES ('$id') ON DUPLICATE KEY UPDATE Numero_SS='$id'";
             break;
         default:
-            $requete = "INSERT INTO Technicien (Numero_SS) VALUES ('$id') ON DUPLICATE KEY UPDATE Numero_SS='$id'";
+            $requete = "INSERT INTO technicien (Numero_SS) VALUES ('$id') ON DUPLICATE KEY UPDATE Numero_SS='$id'";
 
             break;
     }
@@ -127,7 +127,7 @@ if (isset($_POST['modifier'])) {
     exit();
 }else{
         $id = $_GET['id'];
-        $requete = "SELECT * FROM Personnel WHERE Numero_SS = '$id'";
+        $requete = "SELECT * FROM personnel WHERE Numero_SS = '$id'";
         $resultat = mysqli_query($conn, $requete);
         $donnees = mysqli_fetch_assoc($resultat);
     }
@@ -152,11 +152,11 @@ if (isset($_POST['modifier'])) {
     Prénom : <input type="text" name="prenom" value="<?php echo $donnees['Prenom']; ?>"><br><br>
     Rôle :
     <select name="role">
-    <option value="cm"<?php if (chercherRole($id)=="CM") { echo ' selected'; } ?>>CM</option>
-    <option value="technicien"<?php if (chercherRole($id)=="Technicien") { echo ' selected'; }
-    ?>>Technicien</option>
+    <option value="cm"<?php if (chercherRole($id)=="cm") { echo ' selected'; } ?>>cm</option>
+    <option value="technicien"<?php if (chercherRole($id)=="technicien") { echo ' selected'; }
+    ?>>technicien</option>
     <option value="employe"<?php if (chercherRole($id)=="employe" || chercherRole($id)=="Unknown") { echo ' selected'; } ?>>Employé</option>
-    <option value="responsable"<?php if (chercherRole($id)=="Responsable") { echo ' selected'; } ?>>Responsable</option>
+    <option value="responsable"<?php if (chercherRole($id)=="responsable") { echo ' selected'; } ?>>responsable</option>
     </select><br><br>
     <input type="submit" name="modifier" value="Modifier">
 </form>

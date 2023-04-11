@@ -7,7 +7,7 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     exit();
 }
 
-if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "Responsable") {
+if ($_SESSION["role"] != "directeur" && $_SESSION["role"] != "responsable") {
     header("Location: ../index.php");
     exit();
 }
@@ -47,7 +47,7 @@ $conn=connex(MYBASE, "../../myparam") ;
     <h1>Starlight Park</h1>
     <nav>
         <ul>
-            <?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="Responsable"){echo '<li><a href="admin">Admin</a></li>';}?>            <li><a href="../../index.php">Accueil</a></li>
+            <?php if ($_SESSION["role"]=="directeur" || $_SESSION['role'] =="responsable"){echo '<li><a href="admin">Admin</a></li>';}?>            <li><a href="../../index.php">Accueil</a></li>
 
             <li><a href="#">Vente</a></li>
             <li><a href="../../manege">Manege</a></li>
@@ -73,7 +73,7 @@ if (isset($_POST['id_boutique'])) {
     $clientquotidien = $_POST['clientquotidien'];
 
 
-    $sql = "UPDATE Boutique SET Nom_boutique='$nom_boutique', Emplacement='$emplacement',  Chiffre_affaires='$chiffreaffaire', Nb_clients_quotidiens='$clientquotidien' WHERE Id_boutique='$id_boutique'";
+    $sql = "UPDATE boutique SET Nom_boutique='$nom_boutique', Emplacement='$emplacement',  Chiffre_affaires='$chiffreaffaire', Nb_clients_quotidiens='$clientquotidien' WHERE Id_boutique='$id_boutique'";
 
     if (mysqli_query($conn, $sql)) {
         $_SESSION["Message"] = "La boutique a été modifié avec succès";
@@ -86,7 +86,7 @@ if (isset($_POST['id_boutique'])) {
 } else {
     $id_boutique = $_GET['id_boutique'];
 
-    $sql = "SELECT * FROM Boutique WHERE Id_boutique='$id_boutique'";
+    $sql = "SELECT * FROM boutique WHERE Id_boutique='$id_boutique'";
     $result = mysqli_query($conn, $sql);
 
     $row = mysqli_fetch_assoc($result);
@@ -102,10 +102,10 @@ if (isset($_POST['id_boutique'])) {
 
     <?php
 
-    $sql_zones = "SELECT * FROM Zone";
+    $sql_zones = "SELECT * FROM zone";
     $result_zones = mysqli_query($conn, $sql_zones);
 
-    $sql_cm = "SELECT * FROM CM";
+    $sql_cm = "SELECT * FROM cm";
     $result_cm = mysqli_query($conn, $sql_cm);
 
     ?>

@@ -7,7 +7,7 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     exit();
 }
 
-if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "CM" && $_SESSION["role"] != "Responsable") {
+if ($_SESSION["role"] != "directeur" && $_SESSION["role"] != "cm" && $_SESSION["role"] != "responsable") {
     header("Location: ../index.php");
     exit();
 }
@@ -47,7 +47,7 @@ $conn=connex(MYBASE, "../myparam") ;
     <h1>Starlight Park</h1>
     <nav>
         <ul>
-            <?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="CM" || $_SESSION['role'] == "Responsable"){echo '<li><a href="../admin">Admin</a></li>';}?>
+            <?php if ($_SESSION["role"]=="directeur" || $_SESSION['role'] =="cm" || $_SESSION['role'] == "responsable"){echo '<li><a href="../admin">Admin</a></li>';}?>
             <li><a href="../dashboard.php">Accueil</a></li>
             <li><a href="#">Vente</a></li>
             <li><a href="../manege">Manege</a></li>
@@ -62,21 +62,21 @@ $conn=connex(MYBASE, "../myparam") ;
         </ul>
     </nav>
 </div>
-<h1 class="title">Objet vendu par tout les magasins</h1>
+<h1 class="title">objet vendu par tout les magasins</h1>
 <div class="resultat">
 
     <?php
 
 
     $req= "SELECT Nom_objet
-FROM Objet
+FROM objet
 WHERE En_stock > 0 AND NOT EXISTS (
         SELECT Id_boutique
-        FROM Boutique
+        FROM boutique
         WHERE NOT EXISTS (
                 SELECT Id_objet
-                FROM Vente v
-                WHERE v.Id_boutique = Boutique.Id_boutique AND v.Id_objet = Objet.Id_objet
+                FROM vente v
+                WHERE v.Id_boutique = boutique.Id_boutique AND v.Id_objet = objet.Id_objet
             )
     )";
 

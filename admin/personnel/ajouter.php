@@ -7,7 +7,7 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     exit();
 }
 
-if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "CM" && $_SESSION["role"] != "Responsable") {
+if ($_SESSION["role"] != "directeur" && $_SESSION["role"] != "cm" && $_SESSION["role"] != "responsable") {
     header("Location: ../index.php");
     exit();
 }
@@ -46,7 +46,7 @@ Include("role.php") ;
     <h1>Starlight Park</h1>
     <nav>
         <ul>
-            <?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="CM"){echo '<li><a href="../index.php">Admin</a></li>';}?>            <li><a href="../../index.php">Accueil</a></li>
+            <?php if ($_SESSION["role"]=="directeur" || $_SESSION['role'] =="cm"){echo '<li><a href="../index.php">Admin</a></li>';}?>            <li><a href="../../index.php">Accueil</a></li>
             <li><a href="#">Vente</a></li>
             <li><a href="../../manege">Manege</a></li>
             <li class="dropdown">
@@ -81,26 +81,26 @@ if (isset($_POST['modifier'])) {
         $id_boutique = $_POST['boutique'];
     }
 
-    $requete = "INSERT INTO Personnel (Numero_SS, Nom, Prenom, Mot_de_passe)
+    $requete = "INSERT INTO personnel (Numero_SS, Nom, Prenom, Mot_de_passe)
 VALUES ('$id', '$nom', '$prenom', '1234')
 ";
     mysqli_query($conn, $requete);
 
         switch ($role) {
     case 'cm':
-        $requete = "INSERT INTO CM (Numero_SS, Famille) VALUES ('$id', '$famille') ON DUPLICATE KEY UPDATE Famille='$famille'";
+        $requete = "INSERT INTO cm (Numero_SS, Famille) VALUES ('$id', '$famille') ON DUPLICATE KEY UPDATE Famille='$famille'";
         break;
     case 'technicien':
-        $requete = "INSERT INTO Technicien (Numero_SS, Id_atelier) VALUES ('$id', '$atelier')";
+        $requete = "INSERT INTO technicien (Numero_SS, Id_atelier) VALUES ('$id', '$atelier')";
         break;
     case 'employe':
-        $requete = "INSERT INTO Employe (Id_employe, Numero_SS) VALUES ('$id', '$id')";
+        $requete = "INSERT INTO employe (Id_employe, Numero_SS) VALUES ('$id', '$id')";
         break;
     case 'responsable':
-        $requete = "INSERT INTO Responsable (Numero_SS, id_boutique) VALUES ('$id', '$id_boutique')";
+        $requete = "INSERT INTO responsable (Numero_SS, id_boutique) VALUES ('$id', '$id_boutique')";
         break;
     default:
-        $requete = "INSERT INTO Technicien (Numero_SS, Id_atelier) VALUES ('$id', 1)";
+        $requete = "INSERT INTO technicien (Numero_SS, Id_atelier) VALUES ('$id', 1)";
         break;
 }
 echo $requete;
@@ -121,11 +121,11 @@ mysqli_query($conn, $requete);
     Nom : <input type="text" name="nom" required><br><br>
     Prénom : <input type="text" name="prenom" required><br><br>
     Rôle :
-    <select name="role" onchange="showBoutiqueSelect(this)">
-        <option value="cm">CM</option>
-        <option value="technicien">Technicien</option>
+    <select name="role" onchange="showboutiqueSelect(this)">
+        <option value="cm">cm</option>
+        <option value="technicien">technicien</option>
         <option value="employe">Employé</option>
-        <option value="responsable">Responsable</option>
+        <option value="responsable">responsable</option>
     </select>
     <div id="boutique-select" style="display:none">
         <select name="boutique">
@@ -155,7 +155,7 @@ mysqli_query($conn, $requete);
 
 
     <script>
-        function showBoutiqueSelect(selectElement) {
+        function showboutiqueSelect(selectElement) {
             var boutiqueSelect = document.getElementById("boutique-select");
             if (selectElement.value === "responsable") {
                 boutiqueSelect.style.display = "block";
@@ -170,13 +170,13 @@ mysqli_query($conn, $requete);
                 tecSelect.style.display = "none";
             }
 
-            var CMSelect = document.getElementById("cm-select");
+            var cmSelect = document.getElementById("cm-select");
             if (selectElement.value === "cm") {
-                CMSelect.style.display = "block";
-                CMSelect.required = true;
+                cmSelect.style.display = "block";
+                cmSelect.required = true;
             } else {
-                CMSelect.required = false;
-                CMSelect.style.display = "none";
+                cmSelect.required = false;
+                cmSelect.style.display = "none";
             }
 
         }

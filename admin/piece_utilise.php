@@ -7,7 +7,7 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     exit();
 }
 
-if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "CM" && $_SESSION["role"] != "Responsable") {
+if ($_SESSION["role"] != "directeur" && $_SESSION["role"] != "cm" && $_SESSION["role"] != "responsable") {
     header("Location: ../index.php");
     exit();
 }
@@ -47,7 +47,7 @@ $conn=connex(MYBASE, "../myparam") ;
     <h1>Starlight Park</h1>
     <nav>
         <ul>
-            <?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="CM" || $_SESSION['role'] == "Responsable"){echo '<li><a href="../admin">Admin</a></li>';}?>
+            <?php if ($_SESSION["role"]=="directeur" || $_SESSION['role'] =="cm" || $_SESSION['role'] == "responsable"){echo '<li><a href="../admin">Admin</a></li>';}?>
             <li><a href="../dashboard.php">Accueil</a></li>
             <li><a href="#">Vente</a></li>
             <li><a href="../manege">Manege</a></li>
@@ -67,7 +67,7 @@ $conn=connex(MYBASE, "../myparam") ;
     <div class="resultat">
     <form action="piece_utilise.php" method="post">
         <?php
-        $sql = "SELECT * FROM Manege";
+        $sql = "SELECT * FROM manege";
         $result = $conn->query($sql);
         ?>
         <select name="id_manege">
@@ -87,9 +87,9 @@ if (isset($_POST["id_manege"])) {
     $id = $_POST["id_manege"];
 
     $req = "SELECT pd.Nom_piece
-FROM Pieces_detachees pd
-         JOIN Maintenance m ON m.Id_maintenance = (SELECT MAX(Id_maintenance) FROM Maintenance WHERE Id_manege = (SELECT Id_manege FROM Manege WHERE Id_manege = '$id'))
-         JOIN Pieces_detachees p ON p.Id_piece = pd.Id_piece AND p.Id_atelier = m.id_technicien";
+FROM pieces_detachees pd
+         JOIN maintenance m ON m.Id_maintenance = (SELECT MAX(Id_maintenance) FROM maintenance WHERE Id_manege = (SELECT Id_manege FROM manege WHERE Id_manege = '$id'))
+         JOIN pieces_detachees p ON p.Id_piece = pd.Id_piece AND p.Id_atelier = m.id_technicien";
 
 $resultat = mysqli_query($conn, $req);
 

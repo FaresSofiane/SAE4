@@ -23,14 +23,14 @@ if (empty($ss) || empty($ancienmotdepasse) || empty($nouveaumotdepasse) || empty
     } else {
         $hashed_password = hash('sha256', $nouveaumotdepasse);
         $hashed_password2 = hash('sha256', $ancienmotdepasse);
-        $sql_check = "SELECT Mot_de_passe FROM Personnel WHERE Numero_SS = ? AND Mot_de_passe = ?";
+        $sql_check = "SELECT Mot_de_passe FROM personnel WHERE Numero_SS = ? AND Mot_de_passe = ?";
         $stmt = mysqli_prepare($idcom, $sql_check);
         mysqli_stmt_bind_param($stmt, "ss", $ss, $hashed_password2);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
 
         if (mysqli_num_rows($result) > 0) {
-            $sql_update = "UPDATE Personnel SET Mot_de_passe = ? WHERE Numero_SS = ? AND Mot_de_passe = ?";
+            $sql_update = "UPDATE personnel SET Mot_de_passe = ? WHERE Numero_SS = ? AND Mot_de_passe = ?";
             $stmt = mysqli_prepare($idcom, $sql_update);
             mysqli_stmt_bind_param($stmt, "sss", $hashed_password, $ss, $hashed_password2);
             mysqli_stmt_execute($stmt);

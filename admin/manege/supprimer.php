@@ -7,7 +7,7 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     exit();
 }
 
-if ($_SESSION["role"] != "Directeur") {
+if ($_SESSION["role"] != "directeur") {
     header("Location: ../index.php");
     exit();
 }
@@ -18,7 +18,7 @@ $conn=connex(MYBASE, "../../myparam") ;
 
 $id_manege = $_GET['id_manege'];
 
-$sql = "DELETE FROM Manege WHERE Id_manege = $id_manege";
+$sql = "DELETE FROM manege WHERE Id_manege = $id_manege";
 
 if (mysqli_query($conn, $sql)) {
     $_SESSION["Message"] = "Le manège a été supprimé avec succès.";

@@ -11,34 +11,34 @@ function chercherRole($numero_ss) {
     Include("myparam.inc.php") ;;
     $conn=connex(MYBASE, "myparam") ;
 
-    $sql = "SELECT * FROM Directeur WHERE Numero_SS = '$numero_ss'";
+    $sql = "SELECT * FROM directeur WHERE Numero_SS = '$numero_ss'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
-        return "Directeur";
+        return "directeur";
     }
 
-    $sql = "SELECT * FROM CM WHERE Numero_SS = '$numero_ss'";
+    $sql = "SELECT * FROM cm WHERE Numero_SS = '$numero_ss'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
-        return "CM";
+        return "cm";
     }
 
-    $sql = "SELECT * FROM Technicien WHERE Numero_SS = '$numero_ss'";
+    $sql = "SELECT * FROM technicien WHERE Numero_SS = '$numero_ss'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
-        return "Technicien";
+        return "technicien";
     }
 
-    $sql = "SELECT * FROM Responsable WHERE Numero_SS = '$numero_ss'";
+    $sql = "SELECT * FROM responsable WHERE Numero_SS = '$numero_ss'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
-        return "Responsable";
+        return "responsable";
     }
 
-    $sql = "SELECT * FROM Employe WHERE Numero_SS = '$numero_ss'";
+    $sql = "SELECT * FROM employe WHERE Numero_SS = '$numero_ss'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
-        return "Employe";
+        return "employe";
     }
 
 }
@@ -50,7 +50,7 @@ if (isset($_POST['submit'])) {
     $password = $_POST['password'];
     $hashed_password = hash('sha256', $password);
 
-    $stmt = mysqli_prepare($idcom, "SELECT * FROM Personnel WHERE Numero_SS = ? AND Mot_de_passe = ?");
+    $stmt = mysqli_prepare($idcom, "SELECT * FROM personnel WHERE Numero_SS = ? AND Mot_de_passe = ?");
     mysqli_stmt_bind_param($stmt, "ss", $ssn, $hashed_password);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
@@ -68,8 +68,8 @@ if (isset($_POST['submit'])) {
         $_SESSION['numero_ss'] = $row["Numero_SS"];
         $_SESSION['role'] = chercherRole($row["Numero_SS"]);
 
-        if ($_SESSION['role'] == "CM") {
-            $stmt = mysqli_prepare($idcom, "SELECT id_cm FROM CM WHERE Numero_SS = ?");
+        if ($_SESSION['role'] == "cm") {
+            $stmt = mysqli_prepare($idcom, "SELECT id_cm FROM cm WHERE Numero_SS = ?");
             mysqli_stmt_bind_param($stmt, "s", $row["Numero_SS"]);
             mysqli_stmt_execute($stmt);
             $result = mysqli_stmt_get_result($stmt);
@@ -77,8 +77,8 @@ if (isset($_POST['submit'])) {
             $_SESSION['id_cm'] = $row["id_cm"];
         }
 
-        if ($_SESSION['role'] == "Responsable") {
-            $stmt = mysqli_prepare($idcom, "SELECT * FROM Responsable WHERE Numero_SS = ?");
+        if ($_SESSION['role'] == "responsable") {
+            $stmt = mysqli_prepare($idcom, "SELECT * FROM responsable WHERE Numero_SS = ?");
             mysqli_stmt_bind_param($stmt, "s", $row["Numero_SS"]);
             mysqli_stmt_execute($stmt);
             $result = mysqli_stmt_get_result($stmt);

@@ -7,7 +7,7 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     exit();
 }
 
-if ($_SESSION["role"] != "Directeur") {
+if ($_SESSION["role"] != "directeur") {
     header("Location: ../index.php");
     exit();
 }
@@ -18,7 +18,7 @@ $conn=connex(MYBASE, "../../myparam") ;
 
 $id_boutique = $_GET['id_boutique'];
 
-$sql = "DELETE FROM Boutique WHERE Id_boutique = '$id_boutique'";
+$sql = "DELETE FROM boutique WHERE Id_boutique = '$id_boutique'";
 
 if (mysqli_query($conn, $sql)) {
     $_SESSION["Message"] = "La boutique a été supprimé avec succès.";

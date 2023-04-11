@@ -7,7 +7,7 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     exit();
 }
 
-if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "CM" && $_SESSION["role"] != "Responsable") {
+if ($_SESSION["role"] != "directeur" && $_SESSION["role"] != "cm" && $_SESSION["role"] != "responsable") {
     header("Location: ../index.php");
     exit();
 }
@@ -47,7 +47,7 @@ $conn=connex(MYBASE, "../myparam") ;
     <h1>Starlight Park</h1>
     <nav>
         <ul>
-           <?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="CM" || $_SESSION['role'] == "Responsable"){echo '<li><a href="../admin">Admin</a></li>';}?>
+           <?php if ($_SESSION["role"]=="directeur" || $_SESSION['role'] =="cm" || $_SESSION['role'] == "responsable"){echo '<li><a href="../admin">Admin</a></li>';}?>
             <li><a href="../dashboard.php">Accueil</a></li>
             <li><a href="#">Vente</a></li>
             <li><a href="../manege">Manege</a></li>
@@ -67,25 +67,25 @@ $conn=connex(MYBASE, "../myparam") ;
 
     <?php
 
-    if ($_SESSION['role'] == "Directeur" || $_SESSION['role'] == "CM") {
+    if ($_SESSION['role'] == "directeur" || $_SESSION['role'] == "cm") {
         ?>
     <button onclick="window.location.href='manege'">manège</button>
     <?php
     }
-    if ($_SESSION['role'] == "Directeur" || $_SESSION['role'] == "Responsable") {
+    if ($_SESSION['role'] == "directeur" || $_SESSION['role'] == "responsable") {
 
         ?>
 
 
-    <button  onclick="window.location.href='boutique'">Boutique</button>
+    <button  onclick="window.location.href='boutique'">boutique</button>
         <?php }
-    if ($_SESSION["role"] == "Directeur" || $_SESSION["role"] == "CM" || $_SESSION["role"] == "Responsable") {
+    if ($_SESSION["role"] == "directeur" || $_SESSION["role"] == "cm" || $_SESSION["role"] == "responsable") {
         ?>
-        <button onclick="window.location.href='personnel'">Personnel</button>
+        <button onclick="window.location.href='personnel'">personnel</button>
         <button onclick="window.location.href='quiarepare.php'">Qui a réparé ?</button>
         <button onclick="window.location.href='chiffre_affaire_objet.php'">Chiffres d'affaires objet unitaire</button>
         <button onclick="window.location.href='piece_utilise.php'">Piece utilise lors de la derniere maintenance</button>
-        <button onclick="window.location.href='objet_vendu.php'">Objet vendu par tout les magasins</button>';*
+        <button onclick="window.location.href='objet_vendu.php'">objet vendu par tout les magasins</button>';*
         <?php
     }
 

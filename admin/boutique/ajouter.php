@@ -6,7 +6,7 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     header("Location: ../../index.php");
     exit();
 }
-if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "Responsable") {
+if ($_SESSION["role"] != "directeur" && $_SESSION["role"] != "responsable") {
     header("Location: ../index.php");
     exit();
 }
@@ -45,7 +45,7 @@ $conn=connex(MYBASE, "../../myparam") ;
     <h1>Starlight Park</h1>
     <nav>
         <ul>
-<?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="Responsable"){echo '<li><a href="admin">Admin</a></li>';}?>            <li><a href="../../index.php">Accueil</a></li>
+<?php if ($_SESSION["role"]=="directeur" || $_SESSION['role'] =="responsable"){echo '<li><a href="admin">Admin</a></li>';}?>            <li><a href="../../index.php">Accueil</a></li>
             <li><a href="#">Vente</a></li>
             <li><a href="../../manege">Manege</a></li>
             <li class="dropdown">
@@ -79,10 +79,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: index.php");
 }
 
-$sql_zones = "SELECT * FROM Zone";
+$sql_zones = "SELECT * FROM zone";
 $result_zones = mysqli_query($conn, $sql_zones);
 
-$sql_cm = "SELECT * FROM CM";
+$sql_cm = "SELECT * FROM cm";
 $result_cm = mysqli_query($conn, $sql_cm);
 
 ?>

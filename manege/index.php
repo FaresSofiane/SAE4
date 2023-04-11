@@ -36,7 +36,7 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     <h1>Starlight Park</h1>
     <nav>
         <ul>
-           <?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="CM"){echo '<li><a href="../admin">Admin</a></li>';}?>
+           <?php if ($_SESSION["role"]=="directeur" || $_SESSION['role'] =="cm"){echo '<li><a href="../admin">Admin</a></li>';}?>
             <li><a href="../index.php">Accueil</a></li>
             <li><a href="#">Vente</a></li>
             <li><a href="../manege">Manege</a></li>
@@ -58,12 +58,12 @@ if (!isset($_SESSION["nom_utilisateur"])) {
 <form action="index.php" method="GET">
         <input type="text" placeholder="Recherche" name="recherche" class="input-text"><br>
     <div class="input-radio">
-        <input type="radio" id="manege" name="parc" value="Manege" class="input-radio"
+        <input type="radio" id="manege" name="parc" value="manege" class="input-radio"
                checked>
         <label for="manege">Manege</label>
 
-        <input type="radio" id="boutique" name="parc" value="Boutique" class="input-radio">
-        <label for="boutique">Boutique</label>
+        <input type="radio" id="boutique" name="parc" value="boutique" class="input-radio">
+        <label for="boutique">boutique</label>
     </div>
         <button type="submit"><i class="">Rechercher</i></button>
 
@@ -83,8 +83,8 @@ if (!isset($_SESSION["nom_utilisateur"])) {
         $category = $_GET['parc'];
         $recherche = $_GET['recherche'];
         $idcom = connex(MYBASE, "../myparam");
-        if ($category=="Manege") {
-            $requete = "SELECT * FROM Manege WHERE Nom_manege LIKE '%$recherche%' or Description LIKE '%$recherche%'";
+        if ($category=="manege") {
+            $requete = "SELECT * FROM manege WHERE Nom_manege LIKE '%$recherche%' or Description LIKE '%$recherche%'";
             $resultat = mysqli_query($idcom, $requete);
             echo '<table>';
             echo '<thead><tr>';
@@ -102,7 +102,7 @@ if (!isset($_SESSION["nom_utilisateur"])) {
             }
             echo '<tbody></table>';
         } else {
-            $requete = "SELECT * FROM Boutique WHERE Nom_boutique LIKE '%$recherche%' or Emplacement LIKE '%$recherche%'";
+            $requete = "SELECT * FROM boutique WHERE Nom_boutique LIKE '%$recherche%' or Emplacement LIKE '%$recherche%'";
             $resultat = mysqli_query($idcom, $requete);
             echo '<table>';
             echo '<tr>';

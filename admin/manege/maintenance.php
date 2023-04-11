@@ -5,7 +5,7 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     header("Location: ../../index.php");
     exit();
 }
-if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "CM") {
+if ($_SESSION["role"] != "directeur" && $_SESSION["role"] != "cm") {
     header("Location: ../index.php");
     exit();
 }
@@ -40,7 +40,7 @@ $conn=connex(MYBASE, "../../myparam") ;
     <h1>Starlight Park</h1>
     <nav>
         <ul>
-            <?php if ($_SESSION["role"] == "Directeur" || $_SESSION['role'] == "CM") {
+            <?php if ($_SESSION["role"] == "directeur" || $_SESSION['role'] == "cm") {
                 echo '<li><a href="../../admin">Admin</a></li>';
             } ?>
             <li><a href="../../index.php">Accueil</a></li>
@@ -68,7 +68,7 @@ $conn=connex(MYBASE, "../../myparam") ;
         $id_technicien = $_POST["id_tec"];
         $date = $_POST["date"];
 
-        $sql = "INSERT INTO Maintenance (Id_manege, Id_technicien, Date_maintenance) VALUES ('$id_manege', '$id_technicien', '$date')";
+        $sql = "INSERT INTO maintenance (Id_manege, Id_technicien, Date_maintenance) VALUES ('$id_manege', '$id_technicien', '$date')";
 
         if (mysqli_query($conn, $sql)) {
             $_SESSION["Message"] = "La maintenance a été ajoutée avec succès";
@@ -80,7 +80,7 @@ $conn=connex(MYBASE, "../../myparam") ;
     }
 
     $id_manege = $_GET["id_manege"];
-    $sql = "SELECT * FROM Manege WHERE Id_manege = '".$id_manege."'";
+    $sql = "SELECT * FROM manege WHERE Id_manege = '".$id_manege."'";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
     $nom_manege = $row['Nom_manege'];

@@ -6,7 +6,7 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     header("Location: ../../index.php");
     exit();
 }
-if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "CM") {
+if ($_SESSION["role"] != "directeur" && $_SESSION["role"] != "cm") {
     header("Location: ../index.php");
     exit();
 }
@@ -45,7 +45,7 @@ $conn=connex(MYBASE, "../../myparam") ;
     <h1>Starlight Park</h1>
     <nav>
         <ul>
-<?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="CM"){echo '<li><a href="../../admin">Admin</a></li>';}?>            <li><a href="../../index.php">Accueil</a></li>
+<?php if ($_SESSION["role"]=="directeur" || $_SESSION['role'] =="cm"){echo '<li><a href="../../admin">Admin</a></li>';}?>            <li><a href="../../index.php">Accueil</a></li>
             <li><a href="#">Vente</a></li>
             <li><a href="../../manege">Manege</a></li>
             <li class="dropdown">
@@ -70,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $taille_min_client = $_POST["taille_min_client"];
     $id_cm = $_POST["id_cm"];
     $id_zone = $_POST["id_zone"];
-    $sql = "INSERT INTO Manege (Nom_manege, Description, Taille_min_client, Id_cm, Id_zone) VALUES ('$nom_manege', '$description', '$taille_min_client', '$id_cm', '$id_zone')";
+    $sql = "INSERT INTO manege (Nom_manege, Description, Taille_min_client, Id_cm, Id_zone) VALUES ('$nom_manege', '$description', '$taille_min_client', '$id_cm', '$id_zone')";
 
     if (mysqli_query($conn, $sql)) {
         $_SESSION["Message"] = "Le manège a été ajouté avec succès.";
@@ -80,15 +80,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: index.php");
 }
 
-$sql_zones = "SELECT * FROM Zone";
+$sql_zones = "SELECT * FROM zone";
 $result_zones = mysqli_query($conn, $sql_zones);
 
-if ($_SESSION["role"] == "Directeur") {
-    $sql_cm = "SELECT * FROM CM";
+if ($_SESSION["role"] == "directeur") {
+    $sql_cm = "SELECT * FROM cm";
     $result_cm = mysqli_query($conn, $sql_cm);
 
 } else {
-    $sql_cm = "SELECT * FROM CM WHERE Numero_SS = '" . $_SESSION["numero_ss"] . "'";
+    $sql_cm = "SELECT * FROM cm WHERE Numero_SS = '" . $_SESSION["numero_ss"] . "'";
     $result_cm = mysqli_query($conn, $sql_cm);
 }
 ?>
@@ -97,7 +97,7 @@ if ($_SESSION["role"] == "Directeur") {
         Nom du manège: <input type="text" name="nom_manege"><br><br>
         Description: <input type="text" name="description"><br><br>
         Taille minimale pour le client: <input type="number" name="taille_min_client"><br><br>
-        CM:
+        cm:
         <select name="id_cm">
             <?php
             while ($row = mysqli_fetch_assoc($result_cm)) {
@@ -106,7 +106,7 @@ if ($_SESSION["role"] == "Directeur") {
             ?>
         </select>
         <br><br>
-        Zone:
+        zone:
         <select name="id_zone">
             <?php
             while ($row = mysqli_fetch_assoc($result_zones)) {

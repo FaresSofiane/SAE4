@@ -6,7 +6,7 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     header("Location: ../../index.php");
     exit();
 }
-if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "Responsable") {
+if ($_SESSION["role"] != "directeur" && $_SESSION["role"] != "responsable") {
     header("Location: ../index.php");
     exit();
 }
@@ -45,7 +45,7 @@ $conn=connex(MYBASE, "../../myparam") ;
     <h1>Starlight Park</h1>
     <nav>
         <ul>
-<?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="Responsable"){echo '<li><a href="./index.php">Admin</a></li>';}?>            <li><a href="../../dashboard.php">Accueil</a></li>
+<?php if ($_SESSION["role"]=="directeur" || $_SESSION['role'] =="responsable"){echo '<li><a href="./index.php">Admin</a></li>';}?>            <li><a href="../../dashboard.php">Accueil</a></li>
             <li><a href="#">Vente</a></li>
             <li><a href="../../manege">Manege</a></li>
             <li class="dropdown">
@@ -59,14 +59,14 @@ $conn=connex(MYBASE, "../../myparam") ;
         </ul>
     </nav>
 </div>
-<h1 class="title">Liste Boutique</h1>
+<h1 class="title">Liste boutique</h1>
 <br>
 <a href="ajouter.php" style="display: inline-block; padding: 10px 20px; background-color: #ffffff; border: 1px solid #000000;">Ajouter une boutique</a>
 <div class="resultat">
 
 <?php
-if ($_SESSION["role"] == "Directeur") {
-    $sql = "SELECT * FROM Boutique";
+if ($_SESSION["role"] == "directeur") {
+    $sql = "SELECT * FROM boutique";
     $result = $conn->query($sql);
     echo "<table><thead><tr><th>Id boutique</th><th>Nom boutique</th><th>Emplacement</th><th>Chiffres d'affaires</th><th>Nombres de clients quotidiens</th><th>Modifier</th><th>Supprimer</th></tr><thead><tbody>";
     while($row = $result->fetch_assoc()) {
@@ -77,7 +77,7 @@ if ($_SESSION["role"] == "Directeur") {
     }
     echo "</tbody></table>";
 } else {
-    $sql = "SELECT * FROM Boutique WHERE Id_boutique = " . $_SESSION['id_boutique'];
+    $sql = "SELECT * FROM boutique WHERE Id_boutique = " . $_SESSION['id_boutique'];
     $result = $conn->query($sql);
 
     echo "<table><thead><tr><th>Id boutique</th><th>Nom boutique</th><th>Emplacement</th><th>Chiffre d'affaires</th><th>Nombre de clients quotidiens</th><th>Modifier</th></tr></thead><tbody>";

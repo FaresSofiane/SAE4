@@ -6,7 +6,7 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     header("Location: ../../index.php");
     exit();
 }
-if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "CM") {
+if ($_SESSION["role"] != "directeur" && $_SESSION["role"] != "cm") {
     header("Location: ../index.php");
     exit();
 }
@@ -46,7 +46,7 @@ $conn=connex(MYBASE, "../../myparam") ;
     <h1>Starlight Park</h1>
     <nav>
         <ul>
-           <?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="CM"){echo '<li><a href="../../admin">Admin</a></li>';}?>
+           <?php if ($_SESSION["role"]=="directeur" || $_SESSION['role'] =="cm"){echo '<li><a href="../../admin">Admin</a></li>';}?>
             <li><a href="../../dashboard.php">Accueil</a></li>
             <li><a href="#">Vente</a></li>
             <li><a href="../../manege">Manege</a></li>
@@ -72,7 +72,7 @@ if (isset($_POST['id_manege'])) {
     $id_cm = $_POST['id_cm'];
     $id_zone = $_POST['id_zone'];
 
-    $sql = "UPDATE Manege SET Nom_manege='$nom_manege', Description='$description', Taille_min_client='$taille_min_client', Id_cm='$id_cm', Id_zone='$id_zone' WHERE Id_manege='$id_manege'";
+    $sql = "UPDATE manege SET Nom_manege='$nom_manege', Description='$description', Taille_min_client='$taille_min_client', Id_cm='$id_cm', Id_zone='$id_zone' WHERE Id_manege='$id_manege'";
 
     if (mysqli_query($conn, $sql)) {
         $_SESSION["Message"] = "Le manège a été modifié avec succès";
@@ -85,7 +85,7 @@ if (isset($_POST['id_manege'])) {
 } else {
     $id_manege = $_GET['id_manege'];
 
-    $sql = "SELECT * FROM Manege WHERE Id_manege='$id_manege'";
+    $sql = "SELECT * FROM manege WHERE Id_manege='$id_manege'";
     $result = mysqli_query($conn, $sql);
 
     $row = mysqli_fetch_assoc($result);
@@ -95,17 +95,17 @@ if (isset($_POST['id_manege'])) {
     $id_cm = $row['Id_cm'];
     $id_zone = $row['Id_zone'];
 
-if ($_SESSION["role"] == "Directeur") {
-    $sql_cm = "SELECT * FROM CM";
+if ($_SESSION["role"] == "directeur") {
+    $sql_cm = "SELECT * FROM cm";
     $result_cm = mysqli_query($conn, $sql_cm);
 
 } else {
-    $sql_cm = "SELECT * FROM CM WHERE Numero_SS = '" . $_SESSION["numero_ss"] . "'";
+    $sql_cm = "SELECT * FROM cm WHERE Numero_SS = '" . $_SESSION["numero_ss"] . "'";
     $result_cm = mysqli_query($conn, $sql_cm);
 }
 
 }
-$sql_zones = "SELECT * FROM Zone";
+$sql_zones = "SELECT * FROM zone";
 $result_zones = mysqli_query($conn, $sql_zones);
  ?>
 <div class="modifier">
@@ -121,7 +121,7 @@ $result_zones = mysqli_query($conn, $sql_zones);
         <label for="taille_min_client">Taille minimale du client:</label>
         <input type="number" name="taille_min_client" value="<?php echo $taille_min_client ?>">
         <br>
-        <label for="id_cm">ID du CM:</label>
+        <label for="id_cm">ID du cm:</label>
         <select name="id_cm">
             <?php
             while ($row = mysqli_fetch_assoc($result_cm)) {

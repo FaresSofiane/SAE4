@@ -7,7 +7,7 @@ if (!isset($_SESSION["nom_utilisateur"])) {
     exit();
 }
 
-if ($_SESSION["role"] != "Directeur" && $_SESSION["role"] != "CM" && $_SESSION["role"] != "Responsable") {
+if ($_SESSION["role"] != "directeur" && $_SESSION["role"] != "cm" && $_SESSION["role"] != "responsable") {
     header("Location: ../index.php");
     exit();
 }
@@ -46,7 +46,7 @@ Include("role.php") ;
     <h1>Starlight Park</h1>
     <nav>
         <ul>
-<?php if ($_SESSION["role"]=="Directeur" || $_SESSION['role'] =="CM"){echo '<li><a href="../index.php">Admin</a></li>';}?>            <li><a href="../../index.php">Accueil</a></li>
+<?php if ($_SESSION["role"]=="directeur" || $_SESSION['role'] =="cm"){echo '<li><a href="../index.php">Admin</a></li>';}?>            <li><a href="../../index.php">Accueil</a></li>
             <li><a href="#">Vente</a></li>
             <li><a href="../../manege">Manege</a></li>
             <li class="dropdown">
@@ -60,18 +60,18 @@ Include("role.php") ;
         </ul>
     </nav>
 </div>
-<h1 class="title">Liste Personnel</h1>
+<h1 class="title">Liste personnel</h1>
 <br>
-<?php if ($_SESSION["role"] == "Directeur"){
-    echo '<a href="ajouter.php" style="display: inline-block; padding: 10px 20px; background-color: #ffffff; border: 1px solid #000000;">Ajouter un Personnel</a>';
+<?php if ($_SESSION["role"] == "directeur"){
+    echo '<a href="ajouter.php" style="display: inline-block; padding: 10px 20px; background-color: #ffffff; border: 1px solid #000000;">Ajouter un personnel</a>';
 }?>
 
 <div class="resultat">
 
     <?php
-    $sql = "SELECT * FROM Personnel";
+    $sql = "SELECT * FROM personnel";
     $result = $conn->query($sql);
-    if ($_SESSION["role"] == "Directeur") {
+    if ($_SESSION["role"] == "directeur") {
         echo "<table><thead><tr><th>Numéro de sécurité sociale</th><th>Nom</th><th>Prenom</th><th>Role</th><th>Modifier</th><th>Supprimer</th></tr><thead><tbody>";
         while($row = $result->fetch_assoc()) {
             echo "<tr><td>" . $row["Numero_SS"]. "</td><td>" . $row["Nom"]. "</td><td>" . $row["Prenom"]. "</td>";

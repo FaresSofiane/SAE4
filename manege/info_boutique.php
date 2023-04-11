@@ -63,21 +63,21 @@ require_once '../myparam.inc.php';
 $conn = connex(MYBASE, "../myparam");
 
 $stock = "SELECT b.Nom_boutique, o.Nom_objet, o.Prix, o.En_stock
-FROM Boutique b
-         INNER JOIN Vente v ON b.Id_boutique = v.Id_boutique
-         INNER JOIN Objet o ON v.Id_objet = o.Id_objet where b.id_boutique = $id";
+FROM boutique b
+         INNER JOIN vente v ON b.Id_boutique = v.Id_boutique
+         INNER JOIN objet o ON v.Id_objet = o.Id_objet where b.id_boutique = $id";
 
-$vente = "SELECT Vente.*, Objet.Nom_objet AS nom_objet
-FROM Vente
-         INNER JOIN Objet ON Vente.Id_objet = Objet.Id_objet
-WHERE Vente.Id_boutique = $id";
+$vente = "SELECT vente.*, objet.Nom_objet AS nom_objet
+FROM vente
+         INNER JOIN objet ON vente.Id_objet = objet.Id_objet
+WHERE vente.Id_boutique = $id";
 
 $nom_responsable = "SELECT r.Id_responsable, p.Nom, p.Prenom
-FROM Responsable r
-         INNER JOIN Personnel p ON r.Numero_SS = p.Numero_SS
-         INNER JOIN Boutique b ON r.id_boutique = b.Id_boutique where b.id_boutique = $id";
+FROM responsable r
+         INNER JOIN personnel p ON r.Numero_SS = p.Numero_SS
+         INNER JOIN boutique b ON r.id_boutique = b.Id_boutique where b.id_boutique = $id";
 
-$info = "select * from Boutique where Id_boutique = $id";
+$info = "select * from boutique where Id_boutique = $id";
 
 
 $resultat_stock = mysqli_query($conn, $stock);
@@ -101,7 +101,7 @@ if ($resultat_bout ->num_rows > 0) {
 if ($resultat_nomrp->num_rows > 0) {
     while($row = $resultat_nomrp->fetch_assoc()) {
 
-        echo "Nom et prénom du CM qui le gère: " . $row["Nom"] . " " . $row["Prenom"] . "<br>";
+        echo "Nom et prénom du cm qui le gère: " . $row["Nom"] . " " . $row["Prenom"] . "<br>";
 
     }
 } else {
@@ -109,7 +109,7 @@ if ($resultat_nomrp->num_rows > 0) {
 }
 
 if ($resultat_vente->num_rows > 0) {
-    echo "<h1>Objets vendus:</h1> <br>";
+    echo "<h1>objets vendus:</h1> <br>";
     echo "<center><table border='1'>";
     echo "<tr><th>Date</th><th>Prix</th><th>Quantité</th><th>Nom_objet</th></tr>";
 
@@ -122,7 +122,7 @@ if ($resultat_vente->num_rows > 0) {
 }
 
 if ($resultat_stock ->num_rows > 0) {
-    echo "<h1>Objets en stock:</h1> <br>";
+    echo "<h1>objets en stock:</h1> <br>";
     echo "<center><table border='1'>";
     echo "<tr><th>Nom_boutique</th><th>Nom_objet</th><th>Prix</th><th>En_stock</th></tr>";
 

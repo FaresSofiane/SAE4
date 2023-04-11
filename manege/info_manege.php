@@ -62,24 +62,24 @@ require_once '../myparam.inc.php';
 $conn = connex(MYBASE, "../myparam");
 
 $nom_cm = "SELECT p.Nom, p.Prenom
-FROM Personnel p
-         JOIN CM c ON c.Numero_SS = p.Numero_SS
+FROM personnel p
+         JOIN cm c ON c.Numero_SS = p.Numero_SS
          JOIN Manege m ON m.Id_cm = c.id_cm
 WHERE m.Id_manege = $id;
 ";
 
 $reparation = "SELECT r.Date_reparation, t.Numero_SS
-FROM Reparation r
-JOIN Technicien t ON t.id_technicien = r.Id_technicien
+FROM reparation r
+JOIN technicien t ON t.id_technicien = r.Id_technicien
 WHERE r.Id_manege = $id
 ";
 
 $zone="SELECT z.Nom_zone
-FROM Zone z
+FROM zone z
 JOIN Manege m ON m.Id_zone = z.Id_zone
 WHERE m.Id_manege = $id";
 
-$manege="select * from Manege where Id_manege = $id";
+$manege="select * from manege where Id_manege = $id";
 
 $resultat_cm = mysqli_query($conn, $nom_cm);
 $resultat_reparation = mysqli_query($conn, $reparation);
@@ -89,17 +89,17 @@ $resultat_man = mysqli_query($conn, $manege);
 if ($resultat_cm->num_rows > 0) {
     while($row = $resultat_cm->fetch_assoc()) {
 
-        echo "<h1>Nom et prénom du CM qui le gère: " . $row["Nom"] . " " . $row["Prenom"] . "<h1><br>";
+        echo "<h1>Nom et prénom du cm qui le gère: " . $row["Nom"] . " " . $row["Prenom"] . "<h1><br>";
 
     }
 } else {
-    echo "<h1>Aucun CM trouvé.</h1>";
+    echo "<h1>Aucun cm trouvé.</h1>";
 }
 
 if ($resultat_reparation->num_rows > 0) {
 
 
-    echo "<h1>Reparation</h1>";
+    echo "<h1>reparation</h1>";
     echo "<table>";
         echo "<tr>";
             echo "<th>Date de la réparation</th>";
@@ -119,7 +119,7 @@ if ($resultat_reparation->num_rows > 0) {
 if ($resultat_zone ->num_rows > 0) {
     while($row = $resultat_zone->fetch_assoc()) {
 
-        echo "<h1>Zone: " . $row["Nom_zone"] . "</h1><br>";
+        echo "<h1>zone: " . $row["Nom_zone"] . "</h1><br>";
 
     }
 } else {

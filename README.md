@@ -5,7 +5,7 @@ Dépot Git du projet de SAE effectué à l'Université Picardie Jules Verne d'Am
 
 Git repository for the SAE project carried out at the University of Picardy Jules Verne of Amiens as part of the second year of the computer science degree. 💻
 
-![University Logo]([https://upload.wikimedia.org/wikipedia/commons/5/5e/Logo_Universit%C3%A9_de_Picardie_Jules_Verne.svg](https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Logoupjv-bleu.png/400px-Logoupjv-bleu.png))
+![University Logo]([https://upload.wikimedia.org/wikipedia/fr/3/37/Universit%C3%A9_de_Picardie_%28logo%29.svg])
 
 ## Table of Contents 📚
 - [Description](#description)
